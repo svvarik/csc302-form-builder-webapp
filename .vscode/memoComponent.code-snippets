@@ -1,0 +1,25 @@
+{
+  "New Memoized React Component": {
+    "prefix": ["nrcm"],
+    "body": [
+      "import React from 'react'",
+      "import { makeStyles, Theme } from '@material-ui/core'",
+      "",
+      "const useStyles = makeStyles((theme: Theme) => ({",
+      "\troot: {}",
+      "}))",
+      "",
+      "type ${TM_FILENAME_BASE/(.component)//}Props = {$1}",
+      "",
+      "const ${TM_FILENAME_BASE/(.component)//}Component = React.memo<${TM_FILENAME_BASE/(.component)//}Props>((props) => {",
+      "\tconst {} = props",
+      "\tconst classes = useStyles()",
+      "",
+      "\treturn <div className={classes.root}> </div>",
+      "})",
+      "",
+      "export default ${TM_FILENAME_BASE/(.component)//}Component"
+    ],
+    "description": "TS + MUI + React Component with Memoization for perf with styling and export"
+  }
+}
