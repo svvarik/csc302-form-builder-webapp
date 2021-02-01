@@ -1,0 +1,26 @@
+{
+  "New Redux Slice": {
+    "prefix": ["nrx", "nrd"],
+    "body": [
+      "import { createSlice } from '@reduxjs/toolkit'",
+      "import { HYDRATE } from 'next-redux-wrapper'",
+      "",
+      "export type ${TM_FILENAME_BASE/(.slice)//}State = {\n\t$1\n}",
+      "const initialState: ${TM_FILENAME_BASE/(.slice)//}State = {}",
+      "",
+      "const ${TM_FILENAME_BASE/(.slice)//}Slice = createSlice({",
+      "\tname: '${TM_FILENAME_BASE/(.slice)//}',",
+      "\tinitialState,",
+      "\treducers: {},",
+      "\textraReducers: (builder) => {",
+      "\t\tbuilder.addCase(HYDRATE, (state) => state)",
+      "\t},",
+      "})",
+      "",
+      "// export const {} = ${TM_FILENAME_BASE/(.slice)//}Slice.actions",
+      "const ${TM_FILENAME_BASE/(.slice)//}Reducer = ${TM_FILENAME_BASE/(.slice)//}Slice.reducer",
+      "export default ${TM_FILENAME_BASE/(.slice)//}Reducer"
+    ],
+    "description": "Basic Reduxs Slice"
+  }
+}
