@@ -19,6 +19,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           start: yarn client
+          project: ./client
           wait-on: 'http://localhost:3000'
           config: pageLoadTimeout=200000,baseUrl=http://localhost:3000
           browser: chrome
