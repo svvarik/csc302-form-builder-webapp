@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {},
   "scripts": {
-    "client": "cd client && yarn start"
+    "client": "cd ./client && yarn && yarn start",
+    "server": "cd ./server && yarn && yarn dev"
   },
   "browserslist": {
     "production": [
