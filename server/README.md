@@ -31,3 +31,11 @@ You should see Hello World!
 [Postman](https://www.postman.com/)
 
 [MongoDB Compass](https://www.mongodb.com/products/compass)
+
+# To run Jest tests
+
+In the server folder, type:
+
+## 'yarn test'
+
+In your terminal, you should see a list of test suites as well as their pass/fail status.
