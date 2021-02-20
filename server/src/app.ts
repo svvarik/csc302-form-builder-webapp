@@ -37,10 +37,11 @@ MongoClient.connect(process.env.MONGO_URI, {
     }
     // tslint:disable-next-line:no-console
     console.log(`connected to database`);
-    const client = db.db("testName")
+    const client = db.db("SDCDB")
 
     // App usages of imported libraries
     app.use(bodyParser.urlencoded({ extended: true }))
+    app.use(bodyParser.json())
     app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     app.use(morgan("tiny"));
 

@@ -18,6 +18,7 @@
         "emitDecoratorMetadata": true
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "__tests__/*"
     ]
 }

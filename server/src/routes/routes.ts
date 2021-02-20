@@ -1,9 +1,8 @@
 import * as express from "express";
+import * as integration from '../integration'
+import Form from '../classes/Form'
 
 export const register = (app: express.Application, db: any) => {
-
-    // Collections
-    const testCollection = db.collection("testCollection")
 
     /**
      * @swagger
@@ -18,29 +17,35 @@ export const register = (app: express.Application, db: any) => {
 
     /**
      * @swagger
-     * /read:
-     *   get:
-     *     summary: Retrieve all data under test collections
-     *     description: Retrieve a list of users from JSONPlaceholder. Can be used to populate a list of fake users when prototyping or testing an API.
+     * /save:
+     *   post:
+     *     summary: Save form body into database
+     *     description: Given a JSON in requried format, read the json into Objects and save to database
+     *     parameters:
+     *       - name: Form
+     *         description: A JSON representing a Form
+     *         in: Form Body
+     *         required: true
+     *         type: JSON
+     *     responses:
+     *       200:
+     *         description: All Good!
      */
-    app.get('/read', (req, res) => {
-        testCollection.find({}).toArray((err: any, result: any) => {
-            res.send(result);
-        })
+    app.post('/save', async (req, res) => {
+        const form = Form.build(req.body)
+        const status = await integration.insertForm(form, db)
+        res.sendStatus(status)
     })
 
     /**
      * @swagger
-     * /update:
-     *   post:
-     *     summary: Update testCollections with a new json
-     *     description: Retrieve a list of users from JSONPlaceholder. Can be used to populate a list of fake users when prototyping or testing an API.
+     * /newForm:
+     *   get:
+     *     summary: Get a new unique formID
+     *     description: Generate a new unique form ID and return it
      */
-    app.post('/update', (req, res) => {
-        testCollection.insertOne(req.body).then((result: any) => {
-            res.send(result);
-        }).catch((err: any) => {
-            throw err;
-        });
+    app.get('/newForm', (_, res) => {
+        const formID = integration.getFormID();
+        res.send(formID);
     })
 };
