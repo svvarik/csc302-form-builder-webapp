@@ -15,7 +15,8 @@
             ]
         },
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
+        "lib": ["DOM"]
     },
     "include": [
         "src/**/*",

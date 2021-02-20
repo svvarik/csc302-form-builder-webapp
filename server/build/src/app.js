@@ -42,12 +42,14 @@ const options = {
     apis: ['../server/**/*.ts'],
 };
 const swaggerSpec = swagger_jsdoc_1.default(options);
-const mongoUrl = "mongodb+srv://itnUser:csc302@cluster0.ujvux.mongodb.net/<dbname>?retryWrites=true&w=majority";
 // Connect to MongoDB
-mongodb_1.default.connect(mongoUrl, {
-    useUnifiedTopology: true
+mongodb_1.default.connect(process.env.MONGO_URI, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
 }, (err, db) => {
     if (err) {
+        // tslint:disable-next-line:no-console
+        console.log("If you error here, you may have to register you IP for the MongoDB");
         // tslint:disable-next-line:no-console
         return console.log(err);
     }

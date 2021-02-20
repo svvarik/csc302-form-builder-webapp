@@ -16,7 +16,7 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       - name: install cypress
-        run: yarn add cypress --dev
+        run: yarn add cypress --dev && npm install --save cross-fetch && rm package-lock.json && yarn install
       - name: Start localhost and run tests
         uses: cypress-io/github-action@v2
         with:

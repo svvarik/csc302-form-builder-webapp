@@ -11,7 +11,7 @@
 
 # testing
 /coverage
-
+/client/cypress/screenshots
 # production
 /build
 

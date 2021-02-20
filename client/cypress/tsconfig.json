@@ -4,9 +4,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "jsx": "react",
-    "types": ["cypress"],
+    "types": ["cypress", "jest"],
     "paths": {
       "@cypress/react": ["../lib"]
     }
-  }
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ]
 }

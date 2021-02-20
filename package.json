@@ -2,7 +2,10 @@
   "name": "csc302h-starter",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "cross-fetch": "^3.0.6",
+    "react-scripts": "^4.0.2"
+  },
   "scripts": {
     "client": "cd ./client && yarn && yarn start",
     "server": "cd ./server && yarn && yarn dev"
@@ -19,5 +22,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  }
 }

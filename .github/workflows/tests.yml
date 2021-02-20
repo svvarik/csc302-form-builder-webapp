@@ -1,4 +1,4 @@
-name: Jest Tests 
+name: Jest Tests
 on: push
 jobs:
   test:
@@ -9,5 +9,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12'
-      - run: cd server && yarn install && yarn test
-      
+      - name: install
+        run: cd server && yarn install
+      - name: start server
+        run: cd server && yarn dev &
+      - name: test
+        run: cd server && yarn test
