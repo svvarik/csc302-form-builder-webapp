@@ -33,6 +33,8 @@ const morgan_1 = __importDefault(require("morgan"));
 const mongodb_1 = __importDefault(require("mongodb"));
 dotenv_1.default.config();
 const app = express_1.default();
+const cors = require('cors');
+app.use(cors());
 // port to listen
 const port = process.env.SERVER_PORT;
 // Define swagger options
@@ -55,9 +57,10 @@ mongodb_1.default.connect(process.env.MONGO_URI, {
     }
     // tslint:disable-next-line:no-console
     console.log(`connected to database`);
-    const client = db.db("testName");
+    const client = db.db("SDCDB");
     // App usages of imported libraries
     app.use(body_parser_1.default.urlencoded({ extended: true }));
+    app.use(body_parser_1.default.json());
     app.use('/docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerSpec));
     app.use(morgan_1.default("tiny"));
     // Configure routes

@@ -26,37 +26,20 @@ interface Fields {
  * @returns The string representation of the JSON payload
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-async function SaveRequest(
-  formName: string,
-  id: string,
-  sectionsList: SubSection[]
-) {
-  const payload = {
-    name: formName,
-    formID: id,
-    sections: sectionsList,
-  }
+async function SaveRequest(jsonString: string) {
+  const payload = jsonString
 
   const url = 'http://localhost:8080/save'
   const request = new Request(url, {
     method: 'post',
-    body: JSON.stringify(payload),
+    body: payload,
     headers: {
       'Content-Type': 'application/json',
     },
   })
   try {
     const saveRequest = await fetch(request)
-      // eslint-disable-next-line consistent-return
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json()
-        }
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-    return JSON.stringify(payload)
+    return saveRequest
   } catch (err) {
     console.error(err)
   }

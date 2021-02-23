@@ -14,10 +14,10 @@ class Form extends AbstractFormItem {
     }
 
     static build = (jsonObj : any) : Form => {
-        const sections = jsonObj["sections"].map((section: any) => {
+        const sections = jsonObj.sections.map((section: any) => {
             return Section.build(section)
         });
-        return new Form(jsonObj["name"], jsonObj["formID"], sections);
+        return new Form(jsonObj.name, jsonObj.formID, sections);
     }
 
     addSection = (section: Section) => {

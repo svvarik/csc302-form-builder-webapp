@@ -15,13 +15,13 @@ class Section extends AbstractFormItem {
     }
 
     static build = (jsonObj: any) : Section => {
-        const fields = jsonObj["fields"].map((field: any) => {
+        const fields = jsonObj.fields.map((field: any) => {
             return Field.build(field)
         });
-        const subSections = jsonObj["sections"].map((subSection: any) => {
+        const subSections = jsonObj.sections.map((subSection: any) => {
             return Section.build(subSection)
         });
-        return new Section(jsonObj["name"], jsonObj["sectionID"], fields, subSections)
+        return new Section(jsonObj.name, jsonObj.sectionID, fields, subSections)
     }
 
     getFields = () : Field[] => {

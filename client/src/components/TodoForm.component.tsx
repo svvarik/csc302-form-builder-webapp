@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, makeStyles, TextField } from '@material-ui/core'
 import { addTodo } from '../store/slices/TodoList.slice'
+import SaveRequest from '../requests'
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -16,7 +17,7 @@ const TodoForm: React.FC = () => {
   const addTodoHandler: () => void = () => {
     if (currentTodo.length === 0) setError(true)
     else {
-      dispatch(addTodo({ todo: { todo: currentTodo } }))
+      dispatch(SaveRequest(currentTodo))
       setError(false)
       setCurrentTodo('')
     }

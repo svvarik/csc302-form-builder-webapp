@@ -45,5 +45,6 @@ module.exports = {
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'jsx-a11y/anchor-is-valid': 'off',
     'react/jsx-curly-newline': 'off',
+    'import/no-named-as-default': 0,
   },
 }
