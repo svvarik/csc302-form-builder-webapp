@@ -1,0 +1,553 @@
+openapi: 3.0.0
+
+info:
+  title: CSC302 SDCForm EMR API
+  description: API for CSC302 online EMR project
+  version: 1.0.0
+  
+tags: 
+  - name: formTemplate
+    description: a template for an SDCForm 
+  - name: formResponse
+    description: an individual SDCForm for a patient
+  
+paths:
+
+  /formTemplate:
+    post:
+      tags: 
+        - formTemplate
+      summary: Creates a new form template
+      operationId: createFormTemplate
+      requestBody:
+        description: new version of a form template
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormTemplateVersion'
+      responses: 
+        '201':
+          description: Created 
+        '500':
+          description: Server side error
+  
+  /formTemplate/{formTemplateId}:
+    get:
+      tags: 
+        - formTemplate
+      summary: Returns a form template by id
+      operationId: getFormTemplate
+      parameters:
+        - name: formTemplateId
+          in: path
+          required: true
+          schema:
+            type : string
+            format: uuid
+      responses: 
+        '200': 
+          description: Most recent version of requested form template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormTemplateVersion'
+        '400':
+          description: Invalid form configuration id supplied
+        '404':
+          description: Form configuration not found
+        '405':
+          description: Validation exception
+        '500': 
+          description: Server side error
+    patch:
+      tags: 
+        - formTemplate
+      summary: Updates an existing form template
+      operationId: updateFormTemplate
+      parameters:
+        - name: formTemplateId
+          in: path
+          required: true
+          schema:
+            type : string
+            format: uuid
+      requestBody: 
+        description: Form template with edits or updates
+        required: true
+        content: 
+          application/json: 
+            schema: 
+              $ref: '#/components/schemas/FormTemplateVersion'
+      responses: 
+        '200': 
+          description: ok
+        '405':
+          description: Validation exception
+        '500': 
+          description: Server side error
+          
+  /formTemplate/archive/{formTemplateId}:
+    post:
+      tags: 
+        - formTemplate
+      summary: Archives an existing form template, making it unusable
+      operationId: archiveFormTemplate
+      parameters:
+        - name: formTemplateId
+          in: path
+          required: true
+          schema:
+            type : string
+            format: uuid
+      responses: 
+        '200': 
+          description: ok
+        '400':
+          description: Invalid form configuration id supplied
+        '404':
+          description: Form configuration not found
+        '405':
+          description: Validation exception
+        '500': 
+          description: Server side error
+          
+  /formTemplate/{formTemplateId}/versions: 
+    get:
+      tags: 
+        - formTemplate
+      summary: Retrieves all the versions for a single form template
+      operationId: getFormTemplateVersions
+      parameters: 
+      - name: formTemplateId
+        in: path
+        required: true
+        schema: 
+          type: string
+          format: uuid
+      responses: 
+        '200': 
+          description: An array of form template versions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/FormTemplate'
+        '400':
+          description: Invalid form configuration Id supplied
+        '404':
+          description: Form configuration not found
+        '405':
+          description: Validation exception
+        '500': 
+          description: Server side error
+  
+  /formTemplate/{formTemplateId}/versions/{versionId}: 
+    get: 
+      tags: 
+        - formTemplate
+      summary: Retrieves a single version for a specific form template
+      operationId: getFormTemplateVersion
+      parameters: 
+        - name: formTemplateId
+          in: path 
+          required: true
+          schema: 
+            type: string
+        - name: versionId
+          in: path
+          required: true
+          schema: 
+            type: string
+            format: uuid
+      responses: 
+        '200': 
+          description: A single version of a form template
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/FormTemplateVersion'
+        '400':
+          description: Invalid form configuration version Id supplied
+        '404':
+          description: Form configuration not found
+        '405':
+          description: Validation exception
+        '500': 
+          description: Server side error
+  
+  /formResponse: 
+    post: 
+      tags: 
+        - formResponse
+      summary: Adds a new form response
+      operationId: addFormResponse
+      requestBody:
+        description: new form response to be submitted
+        content:
+          'application/json':
+            schema: 
+              $ref: '#/components/schemas/FormResponseVersion'
+      responses: 
+        '200': 
+          description: ok
+        '405':
+          description: Validation exception
+        '500': 
+          description: Server side error
+    get: 
+        tags: 
+          - formResponse
+        summary: Retrieves most recent form response versions for a specified patient id
+        operationId: getResponseVersionByPatient
+        parameters: 
+          - name: patientId
+            in: query
+            required: true
+            schema: 
+              type: string
+              format: uuid
+        responses: 
+          '200': 
+            description: ok
+            content: 
+              application/json: 
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/FormResponse'
+          '400':
+            description: Invalid id supplied
+          '405':
+            description: Validation exception
+          '500': 
+            description: Server side error
+            
+  /formResponse/newForms:
+    get: 
+      tags:
+        - formResponse
+      summary: Returns a list of all the possible empty form templates
+      operationId: getPossibleFormResponses
+      responses: 
+          '200': 
+            description: Templates for new form responses
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items: 
+                    $ref: '#/components/schemas/FormResponseVersion'
+          '405':
+            description: Validation exception
+          '500': 
+            description: Server side error
+            
+  /formResponse/newForm/{procedureId}:
+    get: 
+      tags: 
+        - formResponse
+      summary: Returns an empty form response to be filled out for a given procedure
+      operationId: getEmptyFormResponse
+      parameters: 
+        - name: procedureId
+          in: path
+          required: true
+          schema: 
+            type: string
+            format: uuid
+      responses: 
+        '200': 
+          description: Template for a new form response
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/FormResponseVersion'
+        '400':
+          description: Invalid procedure id supplied
+        '404':
+          description: Procedure not found
+        '405':
+          description: Validation exception
+        '500': 
+          description: Server side error
+    
+  /formResponse/{formResponseId}:
+    get: 
+      tags: 
+        - formResponse
+      summary: Retrieves the most recent version of a form response by id
+      operationId: getRecentFormResponseVersion
+      parameters: 
+        - name: formResponseId
+          in: path
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200': 
+          description: ok
+        '400':
+          description: Invalid form response id supplied
+        '404':
+          description: Form response not found
+        '405':
+          description: Validation exception
+        '500': 
+          description: Server side error
+    patch: 
+      tags: 
+        - formResponse
+      summary: Updates a specific form response version
+      operationId: updateFormResponse
+      parameters: 
+        - name: formResponseId
+          in: path
+          required: true
+          schema: 
+            type: string
+      requestBody: 
+        description: form response version with edits or updates
+        content: 
+          'application/json': 
+            schema: 
+              $ref: '#/components/schemas/FormResponseVersion'
+      responses: 
+        '200': 
+          description: ok
+        '405':
+          description: Validation exception
+        '500': 
+          description: Server side error
+          
+  /formResponse/archive/{formResponseId}:
+    post: 
+      tags: 
+        - formResponse
+      summary: Archives a form response so it is not viewable
+      operationId: archiveFormResponse
+      parameters:
+        - name: formResponseId
+          in: path
+          required: true
+          schema: 
+            type: string
+      responses: 
+        '200': 
+          description: ok
+        '405':
+          description: Validation exception
+        '500': 
+          description: Server side error
+          
+  /formResponse/{formResponseId}/versions: 
+    get: 
+      tags: 
+        - formResponse
+      summary: Retrieve all the versions of a form response
+      operationId: getAllResponseVersions
+      parameters: 
+        - name: formResponseId
+          in: path
+          required: true
+          schema: 
+            type: string
+      responses: 
+        '200': 
+          description: ok
+          content: 
+            application/json: 
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FormResponse'
+        '400':
+          description: Invalid form response id supplied
+        '404':
+          description: Form response not found
+        '405':
+          description: Validation exception
+        '500': 
+          description: Server side error
+        
+  /formResponse/{formResponseId}/versions/{versionId}:
+    get: 
+        tags: 
+          - formResponse
+        summary: Retrieve a single version of form response
+        operationId: getSingleResponseVersion
+        parameters: 
+          - name: formResponseId
+            in: path
+            required: true
+            schema: 
+              type: string
+          - name: versionId
+            in: path
+            required: true
+            schema: 
+              type: string
+        responses: 
+          '200': 
+            description: ok
+            content: 
+              application/json: 
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/FormResponseVersion'
+          '400':
+            description: Invalid form response id supplied
+          '404':
+            description: Form response not found
+          '405':
+            description: Validation exception
+          '500': 
+            description: Server side error
+              
+components:
+  #-------------------------------
+  # Reusable schemas (data models)
+  #-------------------------------
+  schemas:
+  
+    FormTemplate: 
+      type: object
+      properties: 
+        id:
+          type: string
+        procedure:
+          $ref: '#/components/schemas/Procedure'
+        versions: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/FormResponseVersion'
+        
+  
+    FormTemplateVersion:             
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        sections: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Section'
+    
+    FormResponse: 
+      type: object
+      properties:
+        id: 
+          type: string
+        procedure: 
+          $ref: '#/components/schemas/Procedure'
+        patientId: 
+          type: string
+        versions: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/FormResponseVersion'
+            
+    FormResponseVersion: 
+      type: object
+      properties: 
+        id: 
+          type: string
+        name: 
+          type: string
+        editedBy: 
+          type: string
+        timestamp: 
+          type: string
+        sections: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Section'
+    
+    Procedure: 
+      type: object
+      properties: 
+        name: 
+          type: string
+        id:
+          type: string
+          
+    Section: 
+      type: object
+      properties:
+        id: 
+          type: string
+        title: 
+          type: string
+        fields: 
+          type: array
+          items: 
+            oneOf:
+              - $ref: '#/components/schemas/MCField'
+              - $ref: '#/components/schemas/TFField'
+              - $ref: '#/components/schemas/FreeTextField'
+              - $ref: '#/components/schemas/IntField'
+          
+    Field: 
+      type: object
+      properties:
+        id: 
+          type: string
+        question: 
+          type: string
+        response: 
+          type: string
+        enabled: 
+          type: boolean
+        dependantFields: 
+            type: array
+            items:
+              $ref: '#/components/schemas/Field'
+    MCField: 
+      type: object
+      allOf:     
+        - $ref: '#/components/schemas/Field'
+      properties: 
+        choices:
+          type: array
+          items: 
+            type: string
+        answer:
+          type: string
+        allowMult: 
+          type: boolean
+    
+    TFField:
+      type: object
+      allOf:     
+        - $ref: '#/components/schemas/Field'
+      properties: 
+        answer:
+          type: boolean
+     
+    FreeTextField: 
+      type: object
+      allOf: 
+        - $ref: '#/components/schemas/Field'
+      properties: 
+        answer: 
+          type: string
+      
+    IntField: 
+      type: object
+      allOf: 
+        - $ref: '#/components/schemas/Field'
+      properties: 
+        answer: 
+          type: integer
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/bluegreentea/SDCFormEMR-System/1.0.0
