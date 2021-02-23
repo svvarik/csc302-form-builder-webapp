@@ -18,7 +18,7 @@ Full descriptions of the API endpoints can be found in API.md.
 
 All applications involve the same tech stack.  
 
-	Front-end: React, Reduc, Material UI  
+	Front-end: React, Redux, Material UI  
 	Back-end: MongoDB, Express, and TypeScript
 
 For middleware, we will be using Morgan, CORS, and BodyParser. Morgan is useful for auto-documentation, simplifying the process of logging requests to the application. BodyParser parses request bodies as JSON. CORS allows us to test our application in localhost, which is necessary at this stage of development to call our API endpoints. It allows us to specify which cross-origin requests are allowed. We chose to use Morgan and BodyParser because of their compatibility with our chosen tech stack.
