@@ -12,6 +12,9 @@ import MongoClient from 'mongodb';
 dotenv.config();
 const app = express();
 
+const cors = require('cors');
+app.use(cors())
+
 // port to listen
 const port = process.env.SERVER_PORT;
 
