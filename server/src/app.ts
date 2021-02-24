@@ -4,29 +4,25 @@ import * as routes from "./routes/routes";
 import bodyParser from "body-parser";
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import * as swaggerDocument from '../swagger.json'
 import morgan from "morgan";
 import MongoClient from 'mongodb';
-
+import * as fs from 'fs';
+import * as yaml from 'js-yaml';
+import cors from 'cors';
 
 dotenv.config();
 const app = express();
 
-const cors = require('cors');
-app.use(cors())
-
 // port to listen
 const port = process.env.SERVER_PORT;
 
+const swaggerYaml = yaml.load(fs.readFileSync('../server/swagger.yaml', 'utf8')) as {info: any}
 // Define swagger options
 const options = {
-    swaggerDefinition: swaggerDocument,
-    // Paths to files containing OpenAPI definitions
-    apis: ['../server/**/*.ts'],
-};
-
+    swaggerDefinition: swaggerYaml,
+    apis: ['../server/**/*.ts']
+}
 const swaggerSpec = swaggerJSDoc(options);
-
 // Connect to MongoDB
 MongoClient.connect(process.env.MONGO_URI, {
     useUnifiedTopology: true,
@@ -43,6 +39,7 @@ MongoClient.connect(process.env.MONGO_URI, {
     const client = db.db("SDCDB")
 
     // App usages of imported libraries
+    app.use(cors())
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(bodyParser.json())
     app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

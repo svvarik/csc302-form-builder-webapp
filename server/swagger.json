@@ -1,23 +1,96 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "Express API for csc302-spring-2021/proj-ITN",
-        "version": "1.0.0",
-        "description":
-          "This is a REST API application made with Express.",
-        "license": {
-          "name": "Licensed Under MIT",
-          "url": "https://spdx.org/licenses/MIT.html"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Express API for csc302-spring-2021/proj-ITN",
+    "version": "1.0.0",
+    "description": "This is a REST API application made with Express.",
+    "license": {
+      "name": "Licensed Under MIT",
+      "url": "https://spdx.org/licenses/MIT.html"
+    },
+    "contact": {
+      "name": "csc302-spring-2021",
+      "url": "https://github.com/csc302-spring-2021/proj-ITN"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Development server"
+    }
+  ],
+  "basePath": "/docs",
+  "host": "http://localhost:8080",
+  "components": {
+    "schema": {
+      "Form": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "formID": {
+            "type": "string"
+          },
+          "sections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "sectionID": {
+                  "type": "string"
+                },
+                "sections": {
+                  "type": "array",
+                  "items": {}
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      },
+                      "fieldID": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "response": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         },
-        "contact": {
-          "name": "csc302-spring-2021",
-          "url": "https://github.com/csc302-spring-2021/proj-ITN"
+        "example": {
+          "name": "COVID FORM",
+          "formID": "a",
+          "sections": [
+            {
+              "name": "Blood Tests",
+              "sectionID": "1",
+              "sections": [],
+              "fields": [
+                {
+                  "text": "Blood Level",
+                  "response": "50",
+                  "type": "INT",
+                  "fieldID": "a1a"
+                }
+              ]
+            }
+          ]
         }
-      },
-      "servers": [
-        {
-          "url": "http://localhost:8080",
-          "description": "Development server"
-        }
-      ]
+      }
+    }
+  }
 }

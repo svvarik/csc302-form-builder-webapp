@@ -1,0 +1,17 @@
+openapi: 3.0.0
+info:
+  title: Express API for csc302-spring-2021/proj-ITN
+  version: 1.0.0
+  description: This is a REST API application made with Express.
+  license:
+    name: Licensed Under MIT
+    url: https://spdx.org/licenses/MIT.html
+  contact:
+    name: csc302-spring-2021
+    url: https://github.com/csc302-spring-2021/proj-ITN
+servers:
+  - url: http://localhost:8080
+  - description: Development server
+components:
+  schema:
+    $ref: ./schemas/Form.yaml
