@@ -5,15 +5,23 @@ import SaveRequest from '../requests'
 
 type TextQuestionProps = TextQuestion
 
+const useStyles = makeStyles(() => ({
+  root: {
+    display: 'flex',
+  },
+  input: {
+    display: 'flex',
+  },
+}))
+
 const TextQuestionField: React.FC<TextQuestionProps> = ({
   question,
   fieldID,
   fieldLabel,
-  enabled,
 }) => {
   const [currentQuestion, setCurrentQuestion] = useState('')
   const [error, setError] = useState(false)
-
+  const classes = useStyles()
   const onInputChange: (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => void = (event) => {
@@ -32,13 +40,12 @@ const TextQuestionField: React.FC<TextQuestionProps> = ({
   }
 
   return (
-    <div id={fieldID}>
+    <div id={fieldID} className={classes.root}>
       <Typography component='h4' gutterBottom>
         {question}
       </Typography>
       <TextField
-        id={fieldID}
-        className='TextQuestion'
+        className={classes.input}
         variant='standard'
         label={fieldLabel}
         multiline
@@ -49,7 +56,9 @@ const TextQuestionField: React.FC<TextQuestionProps> = ({
         error={error}
         value={currentQuestion}
       />
-      <Button onClick={() => onSubmit()}>Submit</Button>
+      <Button variant='contained' onClick={() => onSubmit()}>
+        Submit
+      </Button>
     </div>
   )
 }

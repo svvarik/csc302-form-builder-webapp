@@ -1,10 +1,8 @@
 import React from 'react'
 import { Container, Box, Typography } from '@material-ui/core'
-import SaveRequest from './requests'
 
-import TodoForm from './components/TodoForm.component'
-import TodoList from './components/TodoList.component'
 import TextQuestionField from './components/TextQuestionField.component'
+import Section from './components/Section.component'
 
 const App: React.FC = () => (
   <Container maxWidth='md'>
@@ -17,6 +15,7 @@ const App: React.FC = () => (
         fieldID='s231asd'
         fieldLabel='please paste your JSON in this field'
       />
+      <Section title='Section 1' />
     </Box>
   </Container>
 )

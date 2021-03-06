@@ -5,14 +5,40 @@ import {
   Select,
   InputLabel,
   FormControl,
+  makeStyles,
 } from '@material-ui/core'
 import { FieldProps } from '../types/Field.type'
-import '../css/Field.css'
 // import SaveRequest from '../requests'
 
+const useStyles = makeStyles((theme) => ({
+  centeredRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+  },
+  fieldBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    border: '2px solid #828282',
+    borderRadius: theme.spacing(2),
+    padding: theme.spacing(2),
+  },
+  dropdown: {
+    width: '20%',
+    minWidth: '100px',
+  },
+  fieldTitle: {
+    marginRight: theme.spacing(3),
+  },
+}))
+
 const Field: React.FC<FieldProps> = (props) => {
-  const [typeState, setType] = React.useState('')
-  const [titleState, setTitle] = React.useState('')
+  const classes = useStyles()
+  const [typeState, setType] = useState('')
+  const [titleState, setTitle] = useState('')
 
   useEffect(() => {
     props.sendData({ title: titleState, type: typeState })
@@ -28,13 +54,25 @@ const Field: React.FC<FieldProps> = (props) => {
 
   const renderDropdown = () => {
     return (
-      <FormControl className='dropdown'>
+      <FormControl className={classes.dropdown}>
         <InputLabel>Type</InputLabel>
-        <Select value={typeState} onChange={handleTypeChange}>
-          <MenuItem value='TEXT'>Text</MenuItem>
-          <MenuItem value='INT'>Integer</MenuItem>
-          <MenuItem value='MC'>Multiple Choice</MenuItem>
-          <MenuItem value='TF'>True/False</MenuItem>
+        <Select
+          data-cy='formMenuItemSelector'
+          value={typeState}
+          onChange={handleTypeChange}
+        >
+          <MenuItem data-cy='formMenuItemText' value='TEXT'>
+            Text
+          </MenuItem>
+          <MenuItem data-cy='formMenuItemInt' value='INT'>
+            Integer
+          </MenuItem>
+          <MenuItem data-cy='formMenuItemMC' value='MC'>
+            Multiple Choice
+          </MenuItem>
+          <MenuItem data-cy='formMenuItemTF' value='TF'>
+            True/False
+          </MenuItem>
         </Select>
       </FormControl>
     )
@@ -56,19 +94,20 @@ const Field: React.FC<FieldProps> = (props) => {
   }
 
   return (
-    <div className='column field-box'>
-      <div
-        className='centered-row'
-        style={{
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-        }}
-      >
-        <div className='field-title'>Field title</div>
-        <TextField required fullWidth onChange={handleTitleChange} />
+    <div data-cy='fieldBox' className={classes.fieldBox}>
+      <div className={classes.centeredRow}>
+        <div data-cy='fieldTitle' className={classes.fieldTitle}>
+          {titleState || 'FIELD TITLE'}
+        </div>
+        <TextField
+          data-cy='titleTextField'
+          required
+          fullWidth
+          onChange={handleTitleChange}
+        />
       </div>
-      <div>{renderDropdown()}</div>
-      <div>{renderQuestion()}</div>
+      <div data-cy='fieldDropdown'>{renderDropdown()}</div>
+      <div data-cy='fieldQuestion'>{renderQuestion()}</div>
     </div>
   )
 }
