@@ -8,7 +8,10 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import { FieldProps } from '../types/Field.type'
-// import SaveRequest from '../requests'
+import TextInput from './questions/TextInput.component'
+import NumInput from './questions/NumInput.component'
+import TFInput from './questions/TFInput.component'
+import MCInput from './questions/MCInput.component'
 
 const useStyles = makeStyles((theme) => ({
   centeredRow: {
@@ -37,19 +40,35 @@ const useStyles = makeStyles((theme) => ({
 
 const Field: React.FC<FieldProps> = (props) => {
   const classes = useStyles()
-  const [typeState, setType] = useState('')
-  const [titleState, setTitle] = useState('')
+  const [jsonState, setJson] = useState({
+    title: '',
+    type: '',
+    response: '',
+    options: [''],
+  })
 
   useEffect(() => {
-    props.sendData({ title: titleState, type: typeState })
+    props.sendData(jsonState)
   })
 
   const handleTypeChange = (event: { target: { value: any } }) => {
-    setType(event.target.value)
+    setJson((prevState) => {
+      return {
+        ...prevState,
+        type: event.target.value,
+        options: [''],
+        response: '',
+      }
+    })
   }
 
   const handleTitleChange = (event: { target: { value: any } }) => {
-    setTitle(event.target.value)
+    setJson((prevState) => {
+      return {
+        ...prevState,
+        title: event.target.value,
+      }
+    })
   }
 
   const renderDropdown = () => {
@@ -58,7 +77,7 @@ const Field: React.FC<FieldProps> = (props) => {
         <InputLabel>Type</InputLabel>
         <Select
           data-cy='formMenuItemSelector'
-          value={typeState}
+          value={jsonState.type}
           onChange={handleTypeChange}
         >
           <MenuItem data-cy='formMenuItemText' value='TEXT'>
@@ -78,18 +97,28 @@ const Field: React.FC<FieldProps> = (props) => {
     )
   }
 
+  const getInputState = (val: any) => {
+    setJson((prevState) => {
+      return {
+        ...prevState,
+        response: val.response,
+        options: jsonState.type === 'MC' ? val.options : [''],
+      }
+    })
+  }
+
   const renderQuestion = () => {
-    switch (typeState) {
+    switch (jsonState.type) {
       case 'TEXT':
-        return <div>I am a Text Question</div>
+        return <TextInput sendResponse={getInputState} />
       case 'INT':
-        return <div>I am a Integer Question</div>
+        return <NumInput sendResponse={getInputState} />
       case 'MC':
-        return <div>I am a Multiple Choice Question</div>
+        return <MCInput sendResponse={getInputState} />
       case 'TF':
-        return <div>I am a True/False Question</div>
+        return <TFInput sendResponse={getInputState} />
       default:
-        return <div>No q selected</div>
+        return ''
     }
   }
 
@@ -97,12 +126,13 @@ const Field: React.FC<FieldProps> = (props) => {
     <div data-cy='fieldBox' className={classes.fieldBox}>
       <div className={classes.centeredRow}>
         <div data-cy='fieldTitle' className={classes.fieldTitle}>
-          {titleState || 'FIELD TITLE'}
+          Field Title
         </div>
         <TextField
           data-cy='titleTextField'
           required
           fullWidth
+          value={jsonState.title}
           onChange={handleTitleChange}
         />
       </div>
