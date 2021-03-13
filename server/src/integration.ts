@@ -19,11 +19,6 @@ const getFormID = () : string => {
     return String(formID)
 }
 
-const getFormTemplates = async (db: any) : Promise<number> => {
-    const formCollection = db.collection("forms")
-    return formCollection
-}
-
 const updateForm = async (form: Form, formID: String, db: any) : Promise<number> => {
     const formCollection = db.collection("forms")
 
@@ -35,4 +30,4 @@ const updateForm = async (form: Form, formID: String, db: any) : Promise<number>
     }
 }
 
-export {getFormID, insertForm, getFormTemplates, updateForm}
+export {getFormID, insertForm, updateForm}

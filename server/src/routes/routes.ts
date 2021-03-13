@@ -65,58 +65,6 @@ export const register = (app: express.Application, db: any) => {
 
     /**
      * @swagger
-     * /formTemplate:
-     *   post:
-     *     summary: Creates new form template
-     *     description: Given a JSON in requried format, read the json into Objects and make a new form
-     *     parameters:
-     *       - name: Form
-     *         description: A JSON representing a Form
-     *         in: Form Body
-     *         required: true
-     *         type: JSON
-     *     responses:
-     *       201:
-     *         description: Form created
-     *       500:
-     *         description: Server side error
-     */
-    app.post('/formTemplate',
-        body('name').isString(),
-        body('sections').isArray(),
-        async (req: express.Request, res: express.Response) => {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(500).json({ errors: errors.array() });
-            }
-            let form;
-            try {
-                const formID = integration.getFormID();
-                req.body["formID"] = formID
-                form = Form.build(req.body)
-                await integration.insertForm(form, db)
-                res.sendStatus(201)
-
-            } catch (err) {
-                return res.status(500).json(err.message);
-            }
-
-        })
-
-    /**
-     * @swagger
-     * /formResponse/newForms:
-     *   get:
-     *     summary: Returns a list of all the possible empty form templates
-     *     description: Generate a list of all possible empty form templates and return it 
-     */
-    app.get('/formResponse/newForms', (_, res) => {
-        const formTemplates = integration.getFormTemplates(db);
-        res.send(formTemplates);
-    })
-
-    /**
-     * @swagger
      * /formTemplate/{formTemplateId}:
      *   patch:
      *     summary: Update existing form
