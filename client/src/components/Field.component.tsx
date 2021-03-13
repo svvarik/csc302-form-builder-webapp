@@ -12,6 +12,7 @@ import TextInput from './questions/TextInput.component'
 import NumInput from './questions/NumInput.component'
 import TFInput from './questions/TFInput.component'
 import MCInput from './questions/MCInput.component'
+import CBInput from './questions/CBInput.component'
 
 const useStyles = makeStyles((theme) => ({
   centeredRow: {
@@ -89,6 +90,9 @@ const Field: React.FC<FieldProps> = (props) => {
           <MenuItem data-cy='formMenuItemMC' value='MC'>
             Multiple Choice
           </MenuItem>
+          <MenuItem data-cy='formMenuItemCB' value='CB'>
+            Checkbox
+          </MenuItem>
           <MenuItem data-cy='formMenuItemTF' value='TF'>
             True/False
           </MenuItem>
@@ -98,11 +102,15 @@ const Field: React.FC<FieldProps> = (props) => {
   }
 
   const getInputState = (val: any) => {
+    const hasOption = (json: { type: string }) => {
+      return json.type === 'MC' || json.type === 'CB'
+    }
+
     setJson((prevState) => {
       return {
         ...prevState,
         response: val.response,
-        options: jsonState.type === 'MC' ? val.options : [''],
+        options: hasOption(jsonState) ? val.options : [''],
       }
     })
   }
@@ -115,6 +123,8 @@ const Field: React.FC<FieldProps> = (props) => {
         return <NumInput sendResponse={getInputState} />
       case 'MC':
         return <MCInput sendResponse={getInputState} />
+      case 'CB':
+        return <CBInput sendResponse={getInputState} />
       case 'TF':
         return <TFInput sendResponse={getInputState} />
       default:

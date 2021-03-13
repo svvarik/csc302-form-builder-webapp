@@ -1,5 +1,5 @@
-import { makeStyles, TextField } from '@material-ui/core'
-import React, { useState, useEffect } from 'react'
+import { makeStyles } from '@material-ui/core'
+import React from 'react'
 import NumberFormat from 'react-number-format'
 import { BaseInputProps } from '../../types/Field.type'
 

@@ -1,10 +1,9 @@
 import {
   FormControl,
-  RadioGroup,
   FormControlLabel,
-  Radio,
   TextField,
   makeStyles,
+  Checkbox,
 } from '@material-ui/core'
 import React from 'react'
 import { MCInputProps } from '../../types/Field.type'
@@ -16,14 +15,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const MCInput: React.FC<MCInputProps> = (props) => {
+const CBInput: React.FC<MCInputProps> = (props) => {
   const [responseState, setResponse] = React.useState('')
   const [answers, setAnswer] = React.useState<string[]>([''])
   const classes = useStyles()
 
-  const handleMCChange = (event: { target: { value: any } }) => {
-    setResponse(event.target.value)
+  const handleCBChange = (count: number) => (event: any) => {
     props.sendResponse({ response: responseState, options: answers })
+    // TODO implement with form response
   }
 
   const newAnswer = () => {
@@ -49,10 +48,11 @@ const MCInput: React.FC<MCInputProps> = (props) => {
         <FormControlLabel
           key={count}
           disabled
-          control={<Radio data-cy={`mcRadio${count}`} />}
+          onChange={handleCBChange(count)}
+          control={<Checkbox data-cy={`checkbox${count}`} />}
           label={
             <TextField
-              data-cy={`mcTextField${count}`}
+              data-cy={`cbTextField${count}`}
               value={ans}
               color='primary'
               placeholder='option'
@@ -66,18 +66,12 @@ const MCInput: React.FC<MCInputProps> = (props) => {
 
   return (
     <div>
-      <FormControl className={classes.input}>
-        <RadioGroup
-          value={responseState}
-          onChange={handleMCChange}
-          data-cy='mcRadioGroup'
-        >
-          {renderAnswers()}
-        </RadioGroup>
+      <FormControl className={classes.input} data-cy='cbGroup'>
+        {renderAnswers()}
       </FormControl>
       <Add prompt='Option' sendClick={newAnswer} />
     </div>
   )
 }
 
-export default MCInput
+export default CBInput

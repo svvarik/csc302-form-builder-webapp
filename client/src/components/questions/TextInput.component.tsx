@@ -1,5 +1,5 @@
 import { makeStyles, TextField } from '@material-ui/core'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { BaseInputProps } from '../../types/Field.type'
 
 const useStyles = makeStyles((theme) => ({
