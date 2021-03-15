@@ -2,6 +2,7 @@ import React from 'react'
 import { Container, Box, Typography } from '@material-ui/core'
 
 import TextQuestionField from './components/TextQuestionField.component'
+import Homepage from './components/Homepage.component'
 import Section from './components/Section.component'
 
 const App: React.FC = () => (
@@ -16,6 +17,9 @@ const App: React.FC = () => (
         fieldLabel='please paste your JSON in this field'
       />
       <Section title='Section 1' />
+    </Box>
+    <Box my={4}>
+      <Homepage />
     </Box>
   </Container>
 )
