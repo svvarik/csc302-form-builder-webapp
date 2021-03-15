@@ -19,4 +19,20 @@ const getFormID = () : string => {
     return String(formID)
 }
 
-export {getFormID, insertForm}
+const getFormTemplates = async (db: any) : Promise<number> => {
+    const formCollection = db.collection("forms")
+    return formCollection
+}
+
+const updateForm = async (form: Form, formID: String, db: any) : Promise<number> => {
+    const formCollection = db.collection("forms")
+
+    try {
+        await formCollection.update({"formID":formID}, form.getJson())
+        return 200;
+    } catch (err: any) {
+        return 401;
+    }
+}
+
+export {getFormID, insertForm, getFormTemplates, updateForm}

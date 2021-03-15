@@ -4,11 +4,11 @@ test('Test Hello World endpoint', async   () => {
   await expect(fetch('http://localhost:8080').then(response => response.text())).resolves.toBe('Hello World!');  
 });
 
-test('Test save endpoint', async   () => {
+  test('Test create new form endpoint', async   () => {
 
-    const data = {'formID': 'ID','name': 'HI','sections': [] as any[]}
+    const data = {'name': 'HI','sections': [] as any[]}
 
-    const response = (await fetch('http://localhost:8080/save',
+    const response = (await fetch('http://localhost:8080/formTemplate',
     {method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -16,5 +16,8 @@ test('Test save endpoint', async   () => {
     body: JSON.stringify(data)
     }))
 
-    expect(response.status).toBe(200);
+
+    expect(response.status).toBe(201);
   });
+
+  
