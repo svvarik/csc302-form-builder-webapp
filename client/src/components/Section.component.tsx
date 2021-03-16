@@ -7,6 +7,7 @@ import {
   Typography,
   TextField,
   Button,
+  makeStyles,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { SectionProps } from '../types/Section.type'
@@ -20,9 +21,19 @@ interface FieldInfo {
   fieldId: string
 }
 
+const useStyles = makeStyles((theme) => ({
+  centeredRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+}))
+
 const Section: React.FC<SectionProps> = (props) => {
+  const classes = useStyles()
   const [title, setTitle] = useState()
-  const [sectionId, setId] = useState(props.sectionId) // eslint-disable-line react/destructuring-assignment
   const [fields, setFields] = useState<Array<FieldInfo>>([])
 
   const getFieldState = (val: any): void => {
@@ -62,7 +73,7 @@ const Section: React.FC<SectionProps> = (props) => {
             onChange={handleTitleChange}
           />
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.centeredRow}>
           {fields.map((field) => {
             return <Field sendData={getFieldState} fieldId={field.fieldId} />
           })}

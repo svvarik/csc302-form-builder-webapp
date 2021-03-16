@@ -12,7 +12,7 @@ interface SectionInfo {
 
 const FormTemplate: React.FC<FormTemplateProps> = (props) => {
   const [formTitle, setTitle] = useState()
-  const [sections, setSections] = React.useState<Array<SectionInfo>>([])
+  const [sections, setSections] = useState<Array<SectionInfo>>([])
 
   const handleTitleChange = (event: { target: { value: any } }) => {
     setTitle(event.target.value)

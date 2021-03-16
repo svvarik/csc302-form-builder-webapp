@@ -46,16 +46,15 @@ const Field: React.FC<FieldProps> = (props) => {
     type: '',
     response: '',
     options: [''],
-    fieldId: props.fieldId, // eslint-disable-line react/destructuring-assignment
   })
 
   useEffect(() => {
-    const { fieldId: id } = props
+    const {"fieldId": id} = props;
     props.sendData({
       ...jsonState,
       fieldId: id,
     })
-  }, [jsonState])
+  })
 
   const handleTypeChange = (event: { target: { value: any } }) => {
     setJson((prevState) => {
