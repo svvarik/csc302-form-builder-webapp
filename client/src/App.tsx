@@ -11,9 +11,6 @@ const App: React.FC = () => (
     <Box my={4}>
       <Homepage />
     </Box>
-    <Box my={4}>
-      <Homepage />
-    </Box>
   </Container>
 )
 
