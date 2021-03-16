@@ -2,7 +2,6 @@ import React from 'react'
 import { Container, Box, Typography } from '@material-ui/core'
 import Homepage from './components/Homepage.component'
 import FormTemplate from './components/FormTemplate.component'
-import Section from './components/Section.component'
 
 const App: React.FC = () => (
   <Container maxWidth='md'>
