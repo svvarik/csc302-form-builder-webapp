@@ -46,6 +46,7 @@ const Field: React.FC<FieldProps> = (props) => {
     type: '',
     response: '',
     options: [''],
+    fieldId: props.fieldId, // eslint-disable-line react/destructuring-assignment
   })
 
   useEffect(() => {

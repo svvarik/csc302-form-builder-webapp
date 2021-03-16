@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid' // eslint-disable-line import/no-extraneous-dependencies
+import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import {
   Accordion,
   AccordionSummary,
@@ -7,7 +7,6 @@ import {
   Typography,
   TextField,
   Button,
-  makeStyles,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { SectionProps } from '../types/Section.type'
@@ -21,47 +20,18 @@ interface FieldInfo {
   fieldId: string
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    marginTop: '2em',
-  },
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-  },
-  fieldRow: {
-    flexBasis: '100%',
-    marginTop: '1em',
-  },
-  addButton: {
-    marginTop: '.5em',
-  },
-}))
-
 const Section: React.FC<SectionProps> = (props) => {
-  const classes = useStyles()
   const [title, setTitle] = useState()
+  const [sectionId, setId] = useState(props.sectionId) // eslint-disable-line react/destructuring-assignment
   const [fields, setFields] = useState<Array<FieldInfo>>([])
 
-  useEffect(() => {
-    const { sectionId: id } = props
-    props.sendData({
-      title,
-      fields,
-      sectionId: id,
-    })
-  }, [title, fields])
-
   const getFieldState = (val: any): void => {
-    const updatedFields: Array<FieldInfo> = [...fields]
-    const updatedIndex = fields.findIndex(
-      (field) => field.fieldId === val.fieldId
-    )
-    updatedFields[updatedIndex] = val
+    const updatedFields: Array<FieldInfo> = fields
+    updatedFields.forEach((field) => {
+      if (val.fieldId === field.fieldId) {
+        field = val // eslint-disable-line no-param-reassign
+      }
+    })
     setFields(updatedFields)
   }
 
@@ -77,15 +47,14 @@ const Section: React.FC<SectionProps> = (props) => {
   }
 
   return (
-    <div className={classes.root}>
-      <Accordion elevation={3}>
+    <div>
+      <Accordion>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon data-cy='expandMore' />}
+          expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
           <TextField
-            data-cy='sectionTitle'
             id='standard-basic'
             label='Section Title'
             onClick={(event) => event.stopPropagation()}
@@ -93,24 +62,11 @@ const Section: React.FC<SectionProps> = (props) => {
             onChange={handleTitleChange}
           />
         </AccordionSummary>
-        <AccordionDetails className={classes.container}>
+        <AccordionDetails>
           {fields.map((field) => {
-            return (
-              <div className={classes.fieldRow}>
-                <Field
-                  key={field.fieldId}
-                  sendData={getFieldState}
-                  fieldId={field.fieldId}
-                />
-              </div>
-            )
+            return <Field sendData={getFieldState} fieldId={field.fieldId} />
           })}
-          <Button
-            data-cy='addField'
-            className={classes.addButton}
-            color='primary'
-            onClick={addField}
-          >
+          <Button color='primary' onClick={addField}>
             + Add Field
           </Button>
         </AccordionDetails>
