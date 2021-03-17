@@ -12,14 +12,29 @@ interface SectionInfo {
 
 const FormTemplate: React.FC<FormTemplateProps> = (props) => {
   const [formTitle, setTitle] = useState()
+  const [formDescription, setDescription] = useState()
   const [sections, setSections] = useState<Array<SectionInfo>>([])
 
   const handleTitleChange = (event: { target: { value: any } }) => {
     setTitle(event.target.value)
   }
 
+  const handleDescriptionChange = (event: { target: { value: any } }) => {
+    setDescription(event.target.value)
+  }
+
   const addSection = () => {
     setSections([...sections, { title: '', fields: [], sectionId: uuidv4() }])
+  }
+
+  const getFieldState = (val: any): void => {
+    const updatedSections: Array<SectionInfo> = [...sections]
+    const updatedIndex = sections.findIndex(
+      (section) => section.sectionId === val.sectionId
+    )
+    updatedSections[updatedIndex] = val
+    setSections(updatedSections)
+    console.log(sections)
   }
 
   return (
@@ -39,7 +54,7 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
           label='Form Template Description'
           fullWidth
           inputProps={{ style: { fontSize: 24 } }}
-          onChange={handleTitleChange}
+          onChange={handleDescriptionChange}
         />
       </div>
       <div>
@@ -48,6 +63,7 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
             key={section.sectionId}
             title={section.title}
             sectionId={section.sectionId}
+            sendData={getFieldState}
           />
         ))}
       </div>

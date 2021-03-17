@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid' // eslint-disable-line import/no-extraneous-dependencies
 import {
   Accordion,
@@ -35,6 +35,15 @@ const Section: React.FC<SectionProps> = (props) => {
   const classes = useStyles()
   const [title, setTitle] = useState()
   const [fields, setFields] = useState<Array<FieldInfo>>([])
+
+  useEffect(() => {
+    const { sectionId: id } = props
+    props.sendData({
+      title,
+      fields,
+      sectionId: id,
+    })
+  }, [title, fields])
 
   const getFieldState = (val: any): void => {
     const updatedFields: Array<FieldInfo> = [...fields]
