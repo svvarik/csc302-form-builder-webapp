@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextField, Button } from '@material-ui/core'
+import { TextField, Button, makeStyles } from '@material-ui/core'
 import { v4 as uuidv4 } from 'uuid' // eslint-disable-line import/no-extraneous-dependencies
 import { FormTemplateProps } from '../types/FormTemplate.type'
 import Section from './Section.component'
@@ -10,7 +10,14 @@ interface SectionInfo {
   sectionId: string
 }
 
+const useStyles = makeStyles((theme) => ({
+  addButton: {
+    marginTop: '2em',
+  },
+}))
+
 const FormTemplate: React.FC<FormTemplateProps> = () => {
+  const classes = useStyles()
   const [formTitle, setTitle] = useState()
   const [formDescription, setDescription] = useState()
   const [sections, setSections] = useState<Array<SectionInfo>>([])
@@ -66,7 +73,11 @@ const FormTemplate: React.FC<FormTemplateProps> = () => {
           />
         ))}
       </div>
-      <Button color='primary' onClick={addSection}>
+      <Button
+        color='primary'
+        onClick={addSection}
+        className={classes.addButton}
+      >
         + Add Section
       </Button>
     </div>

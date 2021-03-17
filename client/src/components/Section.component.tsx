@@ -22,12 +22,23 @@ interface FieldInfo {
 }
 
 const useStyles = makeStyles((theme) => ({
-  centeredRow: {
+  root: {
+    width: '100%',
+    marginTop: '2em',
+  },
+  container: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     flexWrap: 'wrap',
+  },
+  fieldRow: {
+    flexBasis: '100%',
+    marginTop: '1em',
+  },
+  addButton: {
+    marginTop: '.5em',
   },
 }))
 
@@ -66,8 +77,8 @@ const Section: React.FC<SectionProps> = (props) => {
   }
 
   return (
-    <div>
-      <Accordion>
+    <div className={classes.root}>
+      <Accordion elevation={3}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1a-content'
@@ -81,17 +92,23 @@ const Section: React.FC<SectionProps> = (props) => {
             onChange={handleTitleChange}
           />
         </AccordionSummary>
-        <AccordionDetails className={classes.centeredRow}>
+        <AccordionDetails className={classes.container}>
           {fields.map((field) => {
             return (
-              <Field
-                key={field.fieldId}
-                sendData={getFieldState}
-                fieldId={field.fieldId}
-              />
+              <div className={classes.fieldRow}>
+                <Field
+                  key={field.fieldId}
+                  sendData={getFieldState}
+                  fieldId={field.fieldId}
+                />
+              </div>
             )
           })}
-          <Button color='primary' onClick={addField}>
+          <Button
+            className={classes.addButton}
+            color='primary'
+            onClick={addField}
+          >
             + Add Field
           </Button>
         </AccordionDetails>
