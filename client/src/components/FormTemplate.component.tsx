@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { TextField, Button } from '@material-ui/core'
 import { v4 as uuidv4 } from 'uuid' // eslint-disable-line import/no-extraneous-dependencies
 import { FormTemplateProps } from '../types/FormTemplate.type'
@@ -10,7 +10,7 @@ interface SectionInfo {
   sectionId: string
 }
 
-const FormTemplate: React.FC<FormTemplateProps> = (props) => {
+const FormTemplate: React.FC<FormTemplateProps> = () => {
   const [formTitle, setTitle] = useState()
   const [formDescription, setDescription] = useState()
   const [sections, setSections] = useState<Array<SectionInfo>>([])
@@ -34,7 +34,6 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
     )
     updatedSections[updatedIndex] = val
     setSections(updatedSections)
-    console.log(sections)
   }
 
   return (

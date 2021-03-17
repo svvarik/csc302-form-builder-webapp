@@ -59,7 +59,6 @@ const Section: React.FC<SectionProps> = (props) => {
       ...fields,
       { fieldId: uuidv4(), title: '', type: '', response: '', options: [] },
     ])
-    console.log(fields)
   }
 
   const handleTitleChange = (event: { target: { value: any } }) => {
