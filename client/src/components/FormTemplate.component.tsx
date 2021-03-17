@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button } from '@material-ui/core'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid' // eslint-disable-line import/no-extraneous-dependencies
 import { FormTemplateProps } from '../types/FormTemplate.type'
 import Section from './Section.component'
 
@@ -44,7 +44,11 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
       </div>
       <div>
         {sections.map((section) => (
-          <Section title={section.title} sectionId={section.sectionId} />
+          <Section
+            key={section.sectionId}
+            title={section.title}
+            sectionId={section.sectionId}
+          />
         ))}
       </div>
       <Button color='primary' onClick={addSection}>

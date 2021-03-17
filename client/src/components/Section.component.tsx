@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid' // eslint-disable-line import/no-extraneous-dependencies
 import {
   Accordion,
   AccordionSummary,
@@ -37,12 +37,11 @@ const Section: React.FC<SectionProps> = (props) => {
   const [fields, setFields] = useState<Array<FieldInfo>>([])
 
   const getFieldState = (val: any): void => {
-    const updatedFields: Array<FieldInfo> = fields
-    updatedFields.forEach((field) => {
-      if (val.fieldId === field.fieldId) {
-        field = val // eslint-disable-line no-param-reassign
-      }
-    })
+    const updatedFields: Array<FieldInfo> = [...fields]
+    const updatedIndex = fields.findIndex(
+      (field) => field.fieldId === val.fieldId
+    )
+    updatedFields[updatedIndex] = val
     setFields(updatedFields)
   }
 
@@ -51,6 +50,7 @@ const Section: React.FC<SectionProps> = (props) => {
       ...fields,
       { fieldId: uuidv4(), title: '', type: '', response: '', options: [] },
     ])
+    console.log(fields)
   }
 
   const handleTitleChange = (event: { target: { value: any } }) => {
@@ -75,7 +75,13 @@ const Section: React.FC<SectionProps> = (props) => {
         </AccordionSummary>
         <AccordionDetails className={classes.centeredRow}>
           {fields.map((field) => {
-            return <Field sendData={getFieldState} fieldId={field.fieldId} />
+            return (
+              <Field
+                key={field.fieldId}
+                sendData={getFieldState}
+                fieldId={field.fieldId}
+              />
+            )
           })}
           <Button color='primary' onClick={addField}>
             + Add Field
