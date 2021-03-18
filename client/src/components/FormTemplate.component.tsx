@@ -34,7 +34,7 @@ const FormTemplate: React.FC<FormTemplateProps> = () => {
     setSections([...sections, { title: '', fields: [], sectionId: uuidv4() }])
   }
 
-  const getFieldState = (val: any): void => {
+  const getSectionState = (val: any): void => {
     const updatedSections: Array<SectionInfo> = [...sections]
     const updatedIndex = sections.findIndex(
       (section) => section.sectionId === val.sectionId
@@ -69,7 +69,7 @@ const FormTemplate: React.FC<FormTemplateProps> = () => {
             key={section.sectionId}
             title={section.title}
             sectionId={section.sectionId}
-            sendData={getFieldState}
+            sendData={getSectionState}
           />
         ))}
       </div>
