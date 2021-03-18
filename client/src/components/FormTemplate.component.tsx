@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextField, Button, makeStyles } from '@material-ui/core'
 import { v4 as uuidv4 } from 'uuid' // eslint-disable-line import/no-extraneous-dependencies
 import { FormTemplateProps } from '../types/FormTemplate.type'
@@ -16,11 +16,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const FormTemplate: React.FC<FormTemplateProps> = () => {
+const FormTemplate: React.FC<FormTemplateProps> = (props) => {
   const classes = useStyles()
   const [formTitle, setTitle] = useState()
   const [formDescription, setDescription] = useState()
-  const [sections, setSections] = useState<Array<SectionInfo>>([])
+  const [sectionsState, setSections] = useState<Array<SectionInfo>>([])
+
+  useEffect(() => {
+    props.sendForm({
+      title: formTitle,
+      desc: formDescription,
+      sections: sectionsState,
+    })
+  })
 
   const handleTitleChange = (event: { target: { value: any } }) => {
     setTitle(event.target.value)
@@ -31,12 +39,15 @@ const FormTemplate: React.FC<FormTemplateProps> = () => {
   }
 
   const addSection = () => {
-    setSections([...sections, { title: '', fields: [], sectionId: uuidv4() }])
+    setSections([
+      ...sectionsState,
+      { title: '', fields: [], sectionId: uuidv4() },
+    ])
   }
 
   const getSectionState = (val: any): void => {
-    const updatedSections: Array<SectionInfo> = [...sections]
-    const updatedIndex = sections.findIndex(
+    const updatedSections: Array<SectionInfo> = [...sectionsState]
+    const updatedIndex = sectionsState.findIndex(
       (section) => section.sectionId === val.sectionId
     )
     updatedSections[updatedIndex] = val
@@ -64,7 +75,7 @@ const FormTemplate: React.FC<FormTemplateProps> = () => {
         />
       </div>
       <div>
-        {sections.map((section) => (
+        {sectionsState.map((section) => (
           <Section
             key={section.sectionId}
             title={section.title}
