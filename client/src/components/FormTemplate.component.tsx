@@ -28,7 +28,7 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
       desc: formDescription,
       sections: sectionsState,
     })
-  })
+  }, [formTitle, formDescription, sectionsState])
 
   const handleTitleChange = (event: { target: { value: any } }) => {
     setTitle(event.target.value)
