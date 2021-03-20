@@ -10,8 +10,34 @@ const Configure: React.FC = () => {
 
   // JSON will be set from the form component
   const onPublish: () => void = async () => {
-    console.log(currentRequestJson)
-    const req = await PublishRequest(JSON.stringify(currentRequestJson))
+    // const req = await PublishRequest(JSON.stringify(currentRequestJson))
+    const payload = {
+      name: 'COVID FORM',
+      formID: 'a',
+      sections: [
+        {
+          name: 'Blood Tests',
+          sectionID: '1',
+          sections: [],
+          fields: [
+            {
+              text: 'Blood Level',
+              response: '50',
+              type: 'integer',
+              fieldID: 'a1a',
+            },
+            {
+              text: 'Blood Type',
+              response: 'AB',
+              type: 'Multiple',
+              fieldID: 'a1b',
+            },
+          ],
+        },
+      ],
+    }
+    const req = await PublishRequest(JSON.stringify(payload))
+
     if (req && req.status === 200) {
       setCurrentRequestJson('')
     }
