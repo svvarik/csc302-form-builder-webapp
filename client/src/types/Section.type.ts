@@ -1,3 +1,5 @@
 export type SectionProps = {
-    title?: string
+    title: string
+    sectionId: string
+    sendData: (val: any) => void
 }

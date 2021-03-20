@@ -1,5 +1,6 @@
 export type FieldProps = {
-    sendData: (val: any) => void
+    sendData: (val: any) => void, 
+    fieldId: string
 }
 
 export type BaseInputProps = {

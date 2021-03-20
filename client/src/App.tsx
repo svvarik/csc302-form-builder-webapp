@@ -1,22 +1,12 @@
 import React from 'react'
 import { Container, Box, Typography } from '@material-ui/core'
-
-import TextQuestionField from './components/TextQuestionField.component'
 import Homepage from './components/Homepage.component'
-import Section from './components/Section.component'
+import FormTemplate from './components/FormTemplate.component'
 
 const App: React.FC = () => (
   <Container maxWidth='md'>
     <Box my={4}>
-      <Typography data-cy='pageTitle' variant='h4' component='h1' gutterBottom>
-        CSC302H Starter
-      </Typography>
-      <TextQuestionField
-        question='Paste JSON Here'
-        fieldID='s231asd'
-        fieldLabel='please paste your JSON in this field'
-      />
-      <Section title='Section 1' />
+      <FormTemplate sendForm={(_) => {}} dateCreated={Date.now} />
     </Box>
     <Box my={4}>
       <Homepage />

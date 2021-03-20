@@ -49,8 +49,12 @@ const Field: React.FC<FieldProps> = (props) => {
   })
 
   useEffect(() => {
-    props.sendData(jsonState)
-  })
+    const { fieldId: id } = props
+    props.sendData({
+      ...jsonState,
+      fieldId: id,
+    })
+  }, [jsonState])
 
   const handleTypeChange = (event: { target: { value: any } }) => {
     setJson((prevState) => {
