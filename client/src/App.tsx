@@ -1,17 +1,24 @@
 import React from 'react'
-import { Container, Box, Typography } from '@material-ui/core'
-import Homepage from './components/Homepage.component'
-import FormTemplate from './components/FormTemplate.component'
+import { Route, Switch, BrowserRouter } from 'react-router-dom'
+import Configure from './components/Configure.component'
 
-const App: React.FC = () => (
-  <Container maxWidth='md'>
-    <Box my={4}>
-      <FormTemplate sendForm={(_) => {}} dateCreated={Date.now} />
-    </Box>
-    <Box my={4}>
-      <Homepage />
-    </Box>
-  </Container>
-)
+import Homepage from './components/Homepage.component'
+
+const App: React.FC = () => {
+  return (
+    <div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path='/' render={() => <Homepage />} />
+          <Route
+            exact
+            path='/configure-new-form'
+            render={() => <Configure />}
+          />
+        </Switch>
+      </BrowserRouter>
+    </div>
+  )
+}
 
 export default App

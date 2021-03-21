@@ -3,14 +3,18 @@
 // const fieldCollection = db.collection("fields")
 import Form from "./classes/Form";
 
-const insertForm = async (form: Form, db: any) : Promise<number> => {
-    const formCollection = db.collection("forms")
+const formCollectionName = "forms"
+const testFormColectionName = "testforms"
+
+const insertForm = async (form: Form, db: any, test=false) : Promise<string> => {
+    
+    const formCollection = test ? db.collection(testFormColectionName): db.collection(formCollectionName)
 
     try {
         await formCollection.insertOne(form.getJson())
-        return 200;
+        return form.getID();
     } catch (err: any) {
-        return 401;
+        return err.stack;
     }
 }
 
@@ -21,11 +25,11 @@ const getFormID = () : string => {
 
 const getFormTemplates = async (db: any) : Promise<number> => {
     const formCollection = db.collection("forms")
-    return formCollection
+    return formCollection.find().toArray()
 }
 
-const updateForm = async (form: Form, formID: String, db: any) : Promise<number> => {
-    const formCollection = db.collection("forms")
+const updateForm = async (form: Form, formID: String, db: any, test=false) : Promise<number> => {
+    const formCollection = test ? db.collection(testFormColectionName): db.collection(formCollectionName)
 
     try {
         await formCollection.update({"formID":formID}, form.getJson())

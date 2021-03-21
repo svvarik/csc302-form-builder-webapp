@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, makeStyles, TextField } from '@material-ui/core'
-import { addTodo } from '../store/slices/TodoList.slice'
-import SaveRequest from '../requests'
+import { SaveRequest } from '../requests'
 
 const useStyles = makeStyles(() => ({
   root: {},

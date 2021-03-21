@@ -3,13 +3,11 @@ import AbstractFormItem from "./AbstractFormItem";
 import { SectionCollection } from "../types/collections.type";
 
 class Section extends AbstractFormItem {
-    private name: string;
     private fields: Field[];
     private subSections: Section[];
 
-    constructor(name: string, sectionID:string, fields: Field[] = [], subSections: Section[] = []) {
-        super(sectionID)
-        this.name = name
+    constructor(title: string, sectionID:string, fields: Field[] = [], subSections: Section[] = []) {
+        super(sectionID, title)
         this.fields = fields;
         this.subSections = subSections;
     }
@@ -21,7 +19,7 @@ class Section extends AbstractFormItem {
         const subSections = jsonObj.sections.map((subSection: any) => {
             return Section.build(subSection)
         });
-        return new Section(jsonObj.name, jsonObj.sectionID, fields, subSections)
+        return new Section(jsonObj.title, jsonObj.sectionID, fields, subSections)
     }
 
     getFields = () : Field[] => {
@@ -30,7 +28,7 @@ class Section extends AbstractFormItem {
 
     getJson = () : SectionCollection => {
         const jsonObj = {
-            "name": this.name,
+            "title": this.getTitle(),
             "sectionID": this.getID(),
             "subSections": this.subSections.map((section: Section) => {
                 return section.getJson()

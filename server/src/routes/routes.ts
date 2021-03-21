@@ -35,7 +35,8 @@ export const register = (app: express.Application, db: any) => {
      *         description: Server side error
      */
     app.post('/formTemplate',
-        body('name').isString(),
+        body('title').isString(),
+        body('desc').isString(),
         body('sections').isArray(),
         async (req: express.Request, res: express.Response) => {
             const errors = validationResult(req);
@@ -44,14 +45,17 @@ export const register = (app: express.Application, db: any) => {
             }
             let form;
             try {
+                const test = "test" in req.query && req.query.test ? true : false
+                console.log(test)
+
                 const formID = integration.getFormID();
                 req.body["formID"] = formID
                 form = Form.build(req.body)
-                await integration.insertForm(form, db)
-                res.sendStatus(201)
+                const dbResponse = await integration.insertForm(form, db, test)
+                res.send(dbResponse)
 
             } catch (err) {
-                return res.status(500).json(err.message);
+                return res.status(500).json(err.stack);
             }
 
         })
@@ -63,8 +67,8 @@ export const register = (app: express.Application, db: any) => {
      *     summary: Returns a list of all the possible empty form templates
      *     description: Generate a list of all possible empty form templates and return it 
      */
-    app.get('/formResponse/newForms', (_, res) => {
-        const formTemplates = integration.getFormTemplates(db);
+    app.get('/formResponse/newForms', async (_, res) => {
+        const formTemplates = await integration.getFormTemplates(db);
         res.send(formTemplates);
     })
 

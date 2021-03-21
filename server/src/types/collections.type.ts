@@ -1,21 +1,23 @@
 interface FormCollection {
-    name: string,
+    title: string,
+    desc: string,
     formID: string,
     sections: SectionCollection[]
 }
 
 interface SectionCollection {
-    name: string,
+    title: string,
     sectionID: string,
     fields: FieldCollection[],
     subSections: SectionCollection[]
 }
 
 interface FieldCollection {
-    text: string,
+    title: string,
     response: string,
     fieldID: string,
     type: string,
+    options: string[],
     enabled: boolean
 }
 

@@ -5,7 +5,6 @@ import React from 'react'
 describe('FormTemplate Tests', () => {
     it('renders initial state correctly', () => {
       mount(<FormTemplate dateCreated={Date.now} sendForm={() => {}} />)
-  
       cy.dataCy('templateTitle').should('exist')
       cy.dataCy('templateDescription').should('exist')
       cy.dataCy('addSection').should('exist')

@@ -26,7 +26,7 @@ interface Fields {
  * @returns The string representation of the JSON payload
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-async function SaveRequest(jsonString: string) {
+export async function SaveRequest(jsonString: string) {
   const payload = jsonString
 
   const url = 'http://localhost:8080/save'
@@ -45,4 +45,29 @@ async function SaveRequest(jsonString: string) {
   }
 }
 
-export default SaveRequest
+/**
+ * @param formName The name of the form
+ * @param id The id of the form
+ * @param sectionsList The array holding all the various sections of the form
+ *
+ * @returns The string representation of the JSON payload
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export async function PublishRequest(jsonString: string) {
+  const payload = jsonString
+
+  const url = 'http://localhost:8080/formTemplate'
+  const request = new Request(url, {
+    method: 'post',
+    body: payload,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  try {
+    const publishRequest = await fetch(request)
+    return publishRequest
+  } catch (err) {
+    console.error(err)
+  }
+}

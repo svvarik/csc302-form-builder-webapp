@@ -2,30 +2,31 @@ import { FieldCollection } from "../types/collections.type";
 import AbstractFormItem from "./AbstractFormItem";
 
 class Field extends AbstractFormItem {
-    private text: string;
     private response: string;
     private enabled: boolean;
     private type: string;
+    private options: string[];
 
-    constructor(text: string, fieldID:string, type: string, response:string = "") {
-        super(fieldID);
-        this.text = text;
+    constructor(title: string, fieldID:string, type: string, response:string = "", options: string[]) {
+        super(fieldID, title);
         this.type = type;
         this.response = response;
         this.enabled = true;
+        this.options = options
     }
 
     static build = (jsonObj: any) : Field => {
-        return new Field(jsonObj.text, jsonObj.fieldID, jsonObj.type, jsonObj.response)
+        return new Field(jsonObj.title, jsonObj.fieldID, jsonObj.type, jsonObj.response, jsonObj.options)
     };
 
     getJson = () : FieldCollection => {
         const jsonObj = {
-            "text": this.text,
+            "title": this.getTitle(),
             "fieldID": this.getID(),
             "type": this.type,
             "response": this.response,
             "enabled": this.enabled,
+            "options": this.options
         };
         return jsonObj;
     }

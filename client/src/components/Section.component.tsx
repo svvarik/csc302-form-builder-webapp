@@ -53,6 +53,7 @@ const Section: React.FC<SectionProps> = (props) => {
       title,
       fields,
       sectionId: id,
+      sections: [], // This is to model recursive section structure, but is right now set off
     })
   }, [title, fields])
 
@@ -80,14 +81,15 @@ const Section: React.FC<SectionProps> = (props) => {
     <div className={classes.root}>
       <Accordion elevation={3}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon data-cy='expandMore' />}
+          expandIcon={<ExpandMoreIcon />}
+          data-cy='expandMore'
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
           <TextField
-            data-cy='sectionTitle'
             id='standard-basic'
             label='Section Title'
+            data-cy='sectionTitle'
             onClick={(event) => event.stopPropagation()}
             onFocus={(event) => event.stopPropagation()}
             onChange={handleTitleChange}
@@ -106,9 +108,9 @@ const Section: React.FC<SectionProps> = (props) => {
             )
           })}
           <Button
-            data-cy='addField'
             className={classes.addButton}
             color='primary'
+            data-cy='addField'
             onClick={addField}
           >
             + Add Field

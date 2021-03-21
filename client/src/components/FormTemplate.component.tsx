@@ -28,7 +28,7 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
       desc: formDescription,
       sections: sectionsState,
     })
-  })
+  }, [formTitle, formDescription, sectionsState])
 
   const handleTitleChange = (event: { target: { value: any } }) => {
     setTitle(event.target.value)
@@ -58,9 +58,9 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
     <div>
       <div>
         <TextField
-          data-cy='templateTitle'
           id='standard-basic'
           label='Form Template Title'
+          data-cy='templateTitle'
           inputProps={{ style: { fontSize: 48, fontWeight: 'lighter' } }}
           fullWidth
           onChange={handleTitleChange}
@@ -68,9 +68,9 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
       </div>
       <div>
         <TextField
-          data-cy='templateDescription'
           id='standard-basic'
           label='Form Template Description'
+          data-cy='templateDescription'
           fullWidth
           inputProps={{ style: { fontSize: 24 } }}
           onChange={handleDescriptionChange}
@@ -79,7 +79,6 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
       <div>
         {sectionsState.map((section) => (
           <Section
-            data-cy='newSection'
             key={section.sectionId}
             title={section.title}
             sectionId={section.sectionId}
@@ -88,9 +87,9 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
         ))}
       </div>
       <Button
-        data-cy='addSection'
         color='primary'
         onClick={addSection}
+        data-cy='addSection'
         className={classes.addButton}
       >
         + Add Section

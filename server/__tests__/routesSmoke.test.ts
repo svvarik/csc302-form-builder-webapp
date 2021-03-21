@@ -6,9 +6,9 @@ test('Test Hello World endpoint', async   () => {
 
   test('Test create new form endpoint', async   () => {
 
-    const data = {'name': 'HI','sections': [] as any[]}
+    const data = {'title': 'testTitle', 'desc': 'testDescription', 'sections': [] as any[]}
 
-    const response = (await fetch('http://localhost:8080/formTemplate',
+    const response = (await fetch('http://localhost:8080/formTemplate?test=true',
     {method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -16,8 +16,19 @@ test('Test Hello World endpoint', async   () => {
     body: JSON.stringify(data)
     }))
 
+    expect(response.status).toBe(200);
+  });
 
-    expect(response.status).toBe(201);
+  test('Test get all new forms endpoint', async   () => {
+
+    const response = (await fetch('http://localhost:8080/formResponse/newForms',
+    {method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+      },
+    }))
+
+    expect(response.status).toBe(200);
   });
 
   
