@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Container, Grid, Typography } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import React, { useState } from 'react'
 import FormTemplate from './FormTemplate.component'
@@ -49,19 +49,26 @@ const Configure: React.FC = () => {
   }
 
   return (
-    <div>
-      <br />
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <FormTemplate sendForm={getFormState} dateCreated={Date.now} />
+    <Container maxWidth='md'>
+      <div>
+        <br />
+        <Typography data-cy='homepageTitle' variant='h3' component='h3'>
+          Create a New Form
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <FormTemplate sendForm={getFormState} dateCreated={Date.now} />
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Button variant='contained' color='primary' onClick={onPublish}>
-            Publish as Template
-          </Button>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <Button variant='contained' color='primary' onClick={onPublish}>
+              Publish as Template
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </Container>
   )
 }
 
