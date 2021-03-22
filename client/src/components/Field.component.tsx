@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
   },
@@ -139,18 +139,15 @@ const Field: React.FC<FieldProps> = (props) => {
   return (
     <div data-cy='fieldBox' className={classes.fieldBox}>
       <div className={classes.centeredRow}>
-        <div data-cy='fieldTitle' className={classes.fieldTitle}>
-          Field Title
-        </div>
         <TextField
           data-cy='titleTextField'
           required
-          fullWidth
+          label='Field Title'
           value={jsonState.title}
           onChange={handleTitleChange}
         />
+        <div data-cy='fieldDropdown'>{renderDropdown()}</div>
       </div>
-      <div data-cy='fieldDropdown'>{renderDropdown()}</div>
       <div data-cy='fieldQuestion'>{renderQuestion()}</div>
     </div>
   )

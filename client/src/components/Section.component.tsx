@@ -4,12 +4,11 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Typography,
   TextField,
   Button,
   makeStyles,
 } from '@material-ui/core'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded'
 import { SectionProps } from '../types/Section.type'
 import Field from './Field.component'
 
@@ -35,10 +34,15 @@ const useStyles = makeStyles((theme) => ({
   },
   fieldRow: {
     flexBasis: '100%',
-    marginTop: '1em',
+    margin: theme.spacing(5, 0),
   },
   addButton: {
     marginTop: '.5em',
+  },
+  summary: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: theme.spacing(2, 0),
   },
 }))
 
@@ -81,10 +85,11 @@ const Section: React.FC<SectionProps> = (props) => {
     <div className={classes.root}>
       <Accordion elevation={3}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<AddCircleRoundedIcon />}
           data-cy='expandMore'
           aria-controls='panel1a-content'
           id='panel1a-header'
+          className={classes.summary}
         >
           <TextField
             id='standard-basic'

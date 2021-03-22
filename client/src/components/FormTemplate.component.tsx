@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
   addButton: {
     marginTop: '2em',
   },
+  row: {
+    marginBottom: theme.spacing(4),
+  },
 }))
 
 const FormTemplate: React.FC<FormTemplateProps> = (props) => {
@@ -56,7 +59,7 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
 
   return (
     <div>
-      <div>
+      <div className={classes.row}>
         <TextField
           id='standard-basic'
           label='Form Template Title'
@@ -66,7 +69,7 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
           onChange={handleTitleChange}
         />
       </div>
-      <div>
+      <div className={classes.row}>
         <TextField
           id='standard-basic'
           label='Form Template Description'
@@ -76,7 +79,7 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
           onChange={handleDescriptionChange}
         />
       </div>
-      <div>
+      <div className={classes.row}>
         {sectionsState.map((section) => (
           <Section
             key={section.sectionId}

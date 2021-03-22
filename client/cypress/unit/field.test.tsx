@@ -7,7 +7,6 @@ describe('Field Tests', () => {
     mount(<Field fieldId='abc' sendData={(_) => {}} />)
 
     cy.dataCy('fieldBox').should('exist')
-    cy.dataCy('fieldTitle').contains('Field Title')
 
     cy.dataCy('titleTextField').type('New Title 1')
     cy.dataCy('titleTextField')
