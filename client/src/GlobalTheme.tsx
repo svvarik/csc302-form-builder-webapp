@@ -5,7 +5,7 @@ export const GlobalColors = {
   backgroundDefault: '#FFF',
   backgroundActive: '#F6F8F9',
   primary: '#2196F3',
-  secondary: '#FFEB3B',
+  secondary: '#FFF',
   textPrimary: '#1C1C1C',
   textSecondary: '#8B8B8B',
   primaryContrastText: '#FFF',

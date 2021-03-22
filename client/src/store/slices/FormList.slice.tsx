@@ -70,12 +70,20 @@ const FormListSlice = createSlice({
       const newForms = state.forms.filter((td) => td.formID !== formid)
       state.forms = newForms
     },
+    searchForms(state, action: PayloadAction<string>) {
+      const query = action.payload
+      const newForms =
+        query.length > 0
+          ? initialState.forms.filter((td) => td.formTitle.includes(query))
+          : initialState.forms
+      state.forms = newForms
+    },
   },
   extraReducers: {},
 })
 
 const FormListReducer = FormListSlice.reducer
 
-export const { addForm, removeForm } = FormListSlice.actions
+export const { addForm, removeForm, searchForms } = FormListSlice.actions
 
 export default FormListReducer

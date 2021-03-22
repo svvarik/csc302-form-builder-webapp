@@ -39,6 +39,7 @@ const Homepage: React.FC = () => {
             <Grid container item xs={6} spacing={3} justify='flex-end'>
               <Link to='/configure-new-form' className={classes.link}>
                 <Button
+                  data-cy='newFormButton'
                   className={classes.newButton}
                   variant='contained'
                   color='primary'
