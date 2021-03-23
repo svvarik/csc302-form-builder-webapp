@@ -62,6 +62,23 @@ export async function GetAllForms(): Promise<Response> {
   }
 }
 
+export async function DeleteForm(id: string): Promise<Response> {
+  const url = `http://localhost:8080/formTemplate/${id}`
+  const request = new Request(url, {
+    method: 'delete',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  try {
+    const deleteFormRequest = await fetch(request)
+    return deleteFormRequest
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
 export async function HelloWorld() {
   const url = 'http://localhost:8080'
   const request = new Request(url, {

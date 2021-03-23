@@ -39,4 +39,14 @@ const updateForm = async (form: Form, formID: String, db: any, test=false) : Pro
     }
 }
 
-export {getFormID, insertForm, getFormTemplates, updateForm}
+const deleteForm = async (formID: String, db: any, test=false): Promise<number> => {
+    const formCollection = test ? db.collection(testFormColectionName): db.collection(formCollectionName)
+    try {
+        await formCollection.deleteOne({"formID":formID})
+        return 200;
+    } catch (err: any) {
+        return 401;
+    }
+}
+
+export {getFormID, insertForm, getFormTemplates, updateForm, deleteForm}

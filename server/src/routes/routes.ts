@@ -46,8 +46,6 @@ export const register = (app: express.Application, db: any) => {
             let form;
             try {
                 const test = "test" in req.query && req.query.test ? true : false
-                console.log(test)
-
                 const formID = integration.getFormID();
                 req.body.formID = formID
                 form = Form.build(req.body)
@@ -100,6 +98,37 @@ export const register = (app: express.Application, db: any) => {
                 await integration.updateForm(form, id, db)
                 res.sendStatus(200)
 
+            } catch (err) {
+                return res.status(500).json(err.message);
+            }
+        })
+
+    /**
+     * @swagger
+     * /formTemplate/{formTemplateId}:
+     *   delete:
+     *     summary: Delete existing form
+     *     description: Given a JSON in requried format and a form id, read the json and form id and update the
+     *                  respective form with the new information
+     *     responses:
+     *       405:
+     *         description: Validation exception
+     *       200:
+     *         description: Ok
+     *       500:
+     *         description: Server side error
+     */
+    app.delete('/formTemplate/:formTemplateId',
+        async (req: express.Request, res: express.Response) => {
+            const id = req.params.formTemplateId;
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(405).json({ errors: errors.array() });
+            }
+            try {
+                const test = "test" in req.query && req.query.test ? true : false
+                await integration.deleteForm(id, db, test)
+                res.sendStatus(200)
             } catch (err) {
                 return res.status(500).json(err.message);
             }

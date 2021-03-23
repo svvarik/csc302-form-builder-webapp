@@ -51,3 +51,39 @@ test('Test Hello World endpoint', async   () => {
     expect(response.status).toBe(200);
   });
 
+  test('Test create new form then delete endpoint', async () => {
+
+    const data1 = {'title': 'testTitle', 'desc': 'testDescription', 'sections': [] as any[]}
+
+    const response1 = (await fetch(
+      'http://localhost:8080/formTemplate?test=true',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data1)
+      }
+    ))
+
+    expect(response1.status).toBe(200);
+
+    const id = response1.body
+
+    const response2 = (await fetch(
+      `http://localhost:8080/formTemplate/${id}?test=true`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }
+    ))
+
+    // data2 form missing description, therefore response should be 500
+    expect(response2.status).toBe(200);
+
+  });
+
+  
+

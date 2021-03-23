@@ -47,7 +47,12 @@ const Configure: React.FC = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <Link to='/' className={classes.link}>
-              <Button variant='contained' color='primary' onClick={onPublish}>
+              <Button
+                data-cy='publishTemplateButton'
+                variant='contained'
+                color='primary'
+                onClick={onPublish}
+              >
                 Publish as Template
               </Button>
             </Link>

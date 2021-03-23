@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { FormConfig } from '../../types/FormConfig.type'
-import { GetAllForms } from '../../requests'
+import { GetAllForms, DeleteForm } from '../../requests'
 
 export type FormListState = {
   initialForms: FormConfig[]
@@ -76,6 +76,19 @@ export const fetchFormListThunk = createAsyncThunk(
   }
 )
 
+export const removeFromFormListThunk = createAsyncThunk(
+  'FormList/remove',
+  async (id: string) => {
+    try {
+      await DeleteForm(id) // or delete from requests.ts
+      return id
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  }
+)
+
 const FormListSlice = createSlice({
   name: 'FormList',
   initialState,
@@ -83,12 +96,6 @@ const FormListSlice = createSlice({
     addForm(state, action: PayloadAction<FormPayload>) {
       const { form } = action.payload
       const newForms = state.forms.concat(form)
-      state.forms = newForms
-    },
-    // filter
-    removeForm(state, action: PayloadAction<string>) {
-      const formid = action.payload
-      const newForms = state.forms.filter((td) => td.formID !== formid)
       state.forms = newForms
     },
     searchForms(state, action: PayloadAction<string>) {
@@ -101,6 +108,20 @@ const FormListSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(
+      removeFromFormListThunk.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        const formid = action.payload
+        const newForms = state.forms.filter((td) => td.formID !== formid)
+        state.forms = newForms
+      }
+    )
+    builder.addCase(removeFromFormListThunk.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(removeFromFormListThunk.rejected, (state) => {
+      state.loading = false
+    })
     builder.addCase(
       fetchFormListThunk.fulfilled,
       // PayloadAction<FormConfig[]>
@@ -133,6 +154,6 @@ const FormListSlice = createSlice({
 
 const FormListReducer = FormListSlice.reducer
 
-export const { addForm, removeForm, searchForms } = FormListSlice.actions
+export const { addForm, searchForms } = FormListSlice.actions
 
 export default FormListReducer

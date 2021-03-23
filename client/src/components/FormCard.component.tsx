@@ -18,7 +18,7 @@ import {
 } from '@material-ui/core'
 import { HighlightOff, AccountCircle } from '@material-ui/icons'
 import { FormConfig } from '../types/FormConfig.type'
-import { removeForm } from '../store/slices/FormList.slice'
+import { removeFromFormListThunk } from '../store/slices/FormList.slice'
 
 type FormConfigProps = FormConfig
 
@@ -96,7 +96,7 @@ const FormCard: React.FC<FormConfigProps> = ({
   const dispatch = useDispatch()
 
   const deleteCardHandler: () => void = () => {
-    dispatch(removeForm(formID))
+    dispatch(removeFromFormListThunk(formID))
   }
 
   return (
