@@ -1,6 +1,6 @@
 import { mount } from '@cypress/react'
-import Field from '../../src/components/Field.component'
 import React from 'react'
+import Field from '../../src/components/Field.component'
 
 describe('Field Tests', () => {
   it('renders initial state correctly', () => {

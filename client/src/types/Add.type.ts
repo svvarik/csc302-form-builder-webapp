@@ -1,4 +1,4 @@
 export type AddProps = {
-    prompt: string
-    sendClick: () => void
+  prompt: string
+  sendClick: () => void
 }

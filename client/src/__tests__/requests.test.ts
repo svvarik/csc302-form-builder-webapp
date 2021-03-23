@@ -1,60 +1,32 @@
-import SaveRequest from '../requests'
+import { PublishForm, HelloWorld, SaveRequest } from '../requests'
 
-describe('payload creation', () => {
-  it('tests that payload is formatted correctly', async () => {
-    const jsonString = JSON.stringify({
-      name: 'COVID FORM',
-      formID: 'a',
-      sections: [
-        {
-          name: 'Blood Tests',
-          sectionID: '1',
-          sections: [],
-          fields: [
-            {
-              text: 'Blood Level',
-              response: '50',
-              type: 'integer',
-              fieldID: 'a1a',
-            },
-            {
-              text: 'Blood Type',
-              response: 'AB',
-              type: 'Multiple',
-              fieldID: 'a1b',
-            },
-          ],
-        },
-      ],
-    })
-    const result = await SaveRequest(jsonString)
-    const expectedResult = JSON.stringify({
-      name: 'COVID FORM',
-      formID: 'a',
-      sections: [
-        {
-          name: 'Blood Tests',
-          sectionID: '1',
-          sections: [],
-          fields: [
-            {
-              text: 'Blood Level',
-              response: '50',
-              type: 'integer',
-              fieldID: 'a1a',
-            },
-            {
-              text: 'Blood Type',
-              response: 'AB',
-              type: 'Multiple',
-              fieldID: 'a1b',
-            },
-          ],
-        },
-      ],
-    })
-
-    console.log(expectedResult)
-    expect(result).toBe(expectedResult)
+describe('basic api tests', () => {
+  it('ping hello world', async () => {
+    const response = await HelloWorld()
+    expect(response).toBe('Hello World!')
   })
+
+  it('publish form template', async () => {
+      const response = await PublishForm("{'HI', []}")
+      if (response.status) {
+        // proper axios response
+        expect(response.status).toBe(200)
+      } else {
+        // it errored
+        console.error(response)
+        fail()
+      }
+    })
+
+  it('save form', async () => {
+      const response = await SaveRequest("{'HI', []}")
+      if (response.status) {
+        // proper axios response
+        expect(response.status).toBe(200)
+      } else {
+        // it errored
+        console.error(response)
+        fail()
+      }
+    })
 })

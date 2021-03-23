@@ -16,7 +16,7 @@ API endpoints consumed: search
 
 Full descriptions of the API endpoints can be found in API.md.
 
-All applications involve the same tech stack.  
+All applications involve the same tech stack.
 
 	Front-end: React, Redux, Material UI  
 	Back-end: MongoDB, Express, and TypeScript

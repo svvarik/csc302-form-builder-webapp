@@ -7,7 +7,7 @@ const formCollectionName = "forms"
 const testFormColectionName = "testforms"
 
 const insertForm = async (form: Form, db: any, test=false) : Promise<string> => {
-    
+
     const formCollection = test ? db.collection(testFormColectionName): db.collection(formCollectionName)
 
     try {

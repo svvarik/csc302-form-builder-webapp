@@ -1,7 +1,7 @@
 import fetch from 'cross-fetch';
 
-test('Test Hello World endpoint', async () => {
-  await expect(fetch('http://localhost:8080').then(response => response.text())).resolves.toBe('Hello World!');  
+test('Test Hello World endpoint', async   () => {
+  await expect(fetch('http://localhost:8080').then(response => response.text())).resolves.toBe('Hello World!');
 });
 
   test('Test create new form endpoint', async () => {
@@ -10,7 +10,7 @@ test('Test Hello World endpoint', async () => {
 
     const response1 = (await fetch(
       'http://localhost:8080/formTemplate?test=true',
-      { 
+      {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ test('Test Hello World endpoint', async () => {
     const data2 = {'title': 'testTitle', 'sections': [] as any[]}
 
     const response2 = (await fetch(
-      'http://localhost:8080/formTemplate?test=true', 
+      'http://localhost:8080/formTemplate?test=true',
       {
         method: 'POST',
         headers: {
@@ -51,4 +51,3 @@ test('Test Hello World endpoint', async () => {
     expect(response.status).toBe(200);
   });
 
-  

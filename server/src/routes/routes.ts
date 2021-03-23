@@ -49,7 +49,7 @@ export const register = (app: express.Application, db: any) => {
                 console.log(test)
 
                 const formID = integration.getFormID();
-                req.body["formID"] = formID
+                req.body.formID = formID
                 form = Form.build(req.body)
                 const dbResponse = await integration.insertForm(form, db, test)
                 res.send(dbResponse)
@@ -65,7 +65,7 @@ export const register = (app: express.Application, db: any) => {
      * /formResponse/newForms:
      *   get:
      *     summary: Returns a list of all the possible empty form templates
-     *     description: Generate a list of all possible empty form templates and return it 
+     *     description: Generate a list of all possible empty form templates and return it
      */
     app.get('/formResponse/newForms', async (_, res) => {
         const formTemplates = await integration.getFormTemplates(db);
@@ -77,7 +77,7 @@ export const register = (app: express.Application, db: any) => {
      * /formTemplate/{formTemplateId}:
      *   patch:
      *     summary: Update existing form
-     *     description: Given a JSON in requried format and a form id, read the json and form id and update the 
+     *     description: Given a JSON in requried format and a form id, read the json and form id and update the
      *                  respective form with the new information
      *     responses:
      *       405:
@@ -89,7 +89,7 @@ export const register = (app: express.Application, db: any) => {
      */
     app.patch('/formTemplate/:formTemplateId',
         async (req: express.Request, res: express.Response) => {
-            var id = req.params.formTemplateId;
+            const id = req.params.formTemplateId;
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(405).json({ errors: errors.array() });
@@ -103,6 +103,6 @@ export const register = (app: express.Application, db: any) => {
             } catch (err) {
                 return res.status(500).json(err.message);
             }
-        }) 
+        })
 
 };

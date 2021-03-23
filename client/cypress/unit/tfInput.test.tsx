@@ -1,6 +1,6 @@
 import { mount } from '@cypress/react'
-import TFInput from '../../src/components/questions/TFInput.component'
 import React from 'react'
+import TFInput from '../../src/components/questions/TFInput.component'
 
 describe('True/False Input Tests', () => {
   it('renders true/false field state correctly', () => {

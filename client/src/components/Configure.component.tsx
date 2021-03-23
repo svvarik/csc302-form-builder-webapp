@@ -2,8 +2,8 @@ import { Container, Grid, makeStyles, Typography } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { PublishForm } from '../requests'
 import FormTemplate from './FormTemplate.component'
-import { PublishRequest } from '../requests'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -21,7 +21,7 @@ const Configure: React.FC = () => {
 
   const onPublish: () => void = async () => {
     console.log(currentRequestJson)
-    const req = await PublishRequest(JSON.stringify(currentRequestJson))
+    const req = await PublishForm(JSON.stringify(currentRequestJson))
   }
 
   const getFormState = (val: any): void => {

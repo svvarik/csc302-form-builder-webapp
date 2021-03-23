@@ -1,8 +1,8 @@
 import { mount } from '@cypress/react'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
-import Homepage from '../../src/components/Homepage.component'
 import React from 'react'
+import Homepage from '../../src/components/Homepage.component'
 import store from '../../src/store/store'
 
 describe('Homepage Tests', () => {

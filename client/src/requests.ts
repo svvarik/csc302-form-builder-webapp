@@ -25,35 +25,7 @@ interface Fields {
  *
  * @returns The string representation of the JSON payload
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function SaveRequest(jsonString: string) {
-  const payload = jsonString
-
-  const url = 'http://localhost:8080/save'
-  const request = new Request(url, {
-    method: 'post',
-    body: payload,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-  try {
-    const saveRequest = await fetch(request)
-    return saveRequest
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-/**
- * @param formName The name of the form
- * @param id The id of the form
- * @param sectionsList The array holding all the various sections of the form
- *
- * @returns The string representation of the JSON payload
- */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function PublishRequest(jsonString: string) {
+export async function PublishForm(jsonString: string) {
   const payload = jsonString
 
   const url = 'http://localhost:8080/formTemplate'
@@ -70,4 +42,30 @@ export async function PublishRequest(jsonString: string) {
   } catch (err) {
     console.error(err)
   }
+}
+
+export async function GetAllForms() {
+  const url = 'http://localhost:8080/formTemplate'
+  const request = new Request(url, {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  try {
+    const getAllFormsRequest = await fetch(request)
+    return getAllFormsRequest
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export async function HelloWorld() {
+  const url = 'http://localhost:8080'
+  const request = new Request(url, {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 }

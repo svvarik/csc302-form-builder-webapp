@@ -1,6 +1,6 @@
 import { mount } from '@cypress/react'
-import CBInput from '../../src/components/questions/CBInput.component'
 import React from 'react'
+import CBInput from '../../src/components/questions/CBInput.component'
 
 describe('Checkbox Input Tests', () => {
   it('renders cb field state correctly', () => {
