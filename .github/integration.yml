@@ -1,0 +1,29 @@
+# name: Cypress Tests
+# on: [push]
+# jobs:
+#   cypress:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Cache multiple paths
+#         uses: actions/cache@v2
+#         with:
+#           path: |
+#             ~/cache
+#             ~/.cache
+#             !~/cache/exclude
+#             ~/.cache/Cypress
+#             **/node_modules
+#           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+#       - name: install cypress
+#         run: yarn add cypress --dev && npm install --save cross-fetch && rm package-lock.json && yarn install
+#       - name: Start localhost and run tests
+#         uses: cypress-io/github-action@v2
+#         with:
+#           start: yarn client
+#           project: ./client
+#           wait-on: 'http://localhost:3000'
+#           wait-on-timeout: 6000
+#           config: pageLoadTimeout=200000,baseUrl=http://localhost:3000
+#           browser: chrome
+#           env: NODE_ENV=dev

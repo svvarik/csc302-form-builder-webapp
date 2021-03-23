@@ -67,7 +67,7 @@ const NavbarComponent: React.FC = (props: any) => {
   ) => void = (e) => {
     dispatch(searchForms(e.currentTarget.value))
   }
-  console.log(pathname)
+
   return (
     <div className={classes.grow}>
       <AppBar position='static'>

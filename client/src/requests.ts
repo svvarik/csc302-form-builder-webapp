@@ -25,7 +25,7 @@ interface Fields {
  *
  * @returns The string representation of the JSON payload
  */
-export async function PublishForm(jsonString: string) {
+export async function PublishForm(jsonString: string): Promise<Response> {
   const payload = jsonString
 
   const url = 'http://localhost:8080/formTemplate'
@@ -41,11 +41,12 @@ export async function PublishForm(jsonString: string) {
     return publishRequest
   } catch (err) {
     console.error(err)
+    throw err
   }
 }
 
-export async function GetAllForms() {
-  const url = 'http://localhost:8080/formTemplate'
+export async function GetAllForms(): Promise<Response> {
+  const url = 'http://localhost:8080/formResponse/newForms'
   const request = new Request(url, {
     method: 'get',
     headers: {
@@ -57,6 +58,7 @@ export async function GetAllForms() {
     return getAllFormsRequest
   } catch (err) {
     console.error(err)
+    throw err
   }
 }
 

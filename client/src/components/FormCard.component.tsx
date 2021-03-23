@@ -90,6 +90,7 @@ const FormCard: React.FC<FormConfigProps> = ({
   dateCreated,
   dateModified,
   procedure,
+  username,
 }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
@@ -136,11 +137,11 @@ const FormCard: React.FC<FormConfigProps> = ({
             {description}
           </Typography>
 
-          <Grid container spacing={10} className={classes.userInfo}>
-            <Grid container item xs={3} spacing={1}>
+          <Grid container spacing={2} className={classes.userInfo}>
+            <Grid item xs={3}>
               <AccountCircle fontSize='large' />
             </Grid>
-            <Grid container item xs={9} spacing={1}>
+            <Grid item xs={9}>
               <Typography
                 variant='body2'
                 component='p'
@@ -151,7 +152,7 @@ const FormCard: React.FC<FormConfigProps> = ({
                 Created by
                 <br />
                 <Box fontWeight='fontWeightBold' color='text.primary'>
-                  User Name
+                  {username}
                 </Box>
               </Typography>
             </Grid>
