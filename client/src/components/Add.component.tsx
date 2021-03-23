@@ -1,5 +1,5 @@
 import AddIcon from '@material-ui/icons/Add'
-import { Fab, makeStyles } from '@material-ui/core'
+import { Button, Fab, makeStyles } from '@material-ui/core'
 import React from 'react'
 import { AddProps } from '../types/Add.type'
 
@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   promptText: {
     marginLeft: theme.spacing(2),
   },
-  leftRow: {
+  addButton: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -19,19 +19,14 @@ const Add: React.FC<AddProps> = ({ prompt, sendClick }) => {
   const classes = useStyles()
 
   return (
-    <div className={classes.leftRow}>
-      <Fab
-        size='small'
-        color='default'
-        onClick={() => sendClick()}
-        data-cy='addButton'
-      >
-        <AddIcon />
-      </Fab>
-      <div className={classes.promptText} data-cy='addPrompt'>
-        Add {prompt}
-      </div>
-    </div>
+    <Button
+      className={classes.addButton}
+      color='primary'
+      data-cy='addButton'
+      onClick={() => sendClick()}
+    >
+      + Add {prompt}
+    </Button>
   )
 }
 

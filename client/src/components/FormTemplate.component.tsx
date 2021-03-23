@@ -3,6 +3,7 @@ import { TextField, Button, makeStyles } from '@material-ui/core'
 import { v4 as uuidv4 } from 'uuid' // eslint-disable-line import/no-extraneous-dependencies
 import { FormTemplateProps } from '../types/FormTemplate.type'
 import Section from './Section.component'
+import Add from './Add.component'
 
 interface SectionInfo {
   title: string
@@ -89,14 +90,7 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
           />
         ))}
       </div>
-      <Button
-        color='primary'
-        onClick={addSection}
-        data-cy='addSection'
-        className={classes.addButton}
-      >
-        + Add Section
-      </Button>
+      <Add sendClick={addSection} prompt='Section' />
     </div>
   )
 }

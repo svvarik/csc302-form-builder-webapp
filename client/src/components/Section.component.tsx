@@ -11,6 +11,7 @@ import {
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded'
 import { SectionProps } from '../types/Section.type'
 import Field from './Field.component'
+import Add from './Add.component'
 
 interface FieldInfo {
   title: string
@@ -34,10 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   fieldRow: {
     flexBasis: '100%',
-    margin: theme.spacing(5, 0),
-  },
-  addButton: {
-    marginTop: '.5em',
+    margin: theme.spacing(3, 0),
   },
   summary: {
     display: 'flex',
@@ -95,6 +93,7 @@ const Section: React.FC<SectionProps> = (props) => {
             id='standard-basic'
             label='Section Title'
             data-cy='sectionTitle'
+            inputProps={{ style: { fontSize: 18 } }}
             onClick={(event) => event.stopPropagation()}
             onFocus={(event) => event.stopPropagation()}
             onChange={handleTitleChange}
@@ -112,14 +111,7 @@ const Section: React.FC<SectionProps> = (props) => {
               </div>
             )
           })}
-          <Button
-            className={classes.addButton}
-            color='primary'
-            data-cy='addField'
-            onClick={addField}
-          >
-            + Add Field
-          </Button>
+          <Add sendClick={addField} prompt='Field' />
         </AccordionDetails>
       </Accordion>
     </div>

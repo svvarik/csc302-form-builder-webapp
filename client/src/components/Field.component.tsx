@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
   },
   dropdown: {
     width: '20%',
-    minWidth: '100px',
+    minWidth: '160px',
+    marginTop: theme.spacing(1),
   },
   fieldTitle: {
     marginRight: theme.spacing(3),
@@ -141,7 +142,6 @@ const Field: React.FC<FieldProps> = (props) => {
       <div className={classes.centeredRow}>
         <TextField
           data-cy='titleTextField'
-          required
           label='Field Title'
           value={jsonState.title}
           onChange={handleTitleChange}

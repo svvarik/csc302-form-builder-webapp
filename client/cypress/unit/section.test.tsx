@@ -11,7 +11,7 @@ describe('FormTemplate Tests', () => {
     it('adds new field correctly', () => {
       mount(<Section title="" sectionId={"12345678"} sendData={() => {}} />)
       cy.dataCy('expandMore').click()
-      cy.dataCy('addField').should('exist')
+      cy.dataCy('addButton').should('exist')
     })
   })
   

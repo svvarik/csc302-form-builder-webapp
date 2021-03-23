@@ -7,12 +7,12 @@ describe('FormTemplate Tests', () => {
       mount(<FormTemplate dateCreated={Date.now} sendForm={() => {}} />)
       cy.dataCy('templateTitle').should('exist')
       cy.dataCy('templateDescription').should('exist')
-      cy.dataCy('addSection').should('exist')
+      cy.dataCy('addButton').should('exist')
     })
 
     it('renders new section correctly', () => {
       mount(<FormTemplate dateCreated={Date.now} sendForm={() => {}} />)
-      cy.dataCy('addSection').click()
+      cy.dataCy('addButton').click()
       cy.get('#panel1a-header').should('exist')
     })
   })

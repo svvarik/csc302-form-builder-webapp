@@ -7,9 +7,8 @@ describe('Multiple Choice Input Tests', () => {
     mount(<MCInput sendResponse={(_) => {}} />)
     cy.dataCy('mcRadioGroup').should('exist')
     cy.dataCy('addButton').should('exist')
-    cy.dataCy('addPrompt').should('exist')
     cy.dataCy('mcTextField0').should('exist')
-    cy.dataCy('addPrompt').contains('Add Option')
+    cy.dataCy('addButton').contains('Add Option')
   })
 
   it('MC add options', () => {
