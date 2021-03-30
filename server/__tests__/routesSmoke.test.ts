@@ -51,7 +51,7 @@ test('Test Hello World endpoint', async   () => {
     expect(response.status).toBe(200);
   });
 
-  test('Test create new form then delete endpoint', async () => {
+  test('Test create new form then get by id then delete endpoint', async () => {
 
     const data1 = {'title': 'testTitle', 'desc': 'testDescription', 'sections': [] as any[]}
 
@@ -70,6 +70,15 @@ test('Test Hello World endpoint', async   () => {
 
     const id = response1.body
 
+    const response = (await fetch('http://localhost:8080/formTemplate/${id}?test=true',
+    {method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+      },
+    }))
+
+    expect(response.status).toBe(200);
+
     const response2 = (await fetch(
       `http://localhost:8080/formTemplate/${id}?test=true`,
       {
@@ -85,5 +94,5 @@ test('Test Hello World endpoint', async   () => {
 
   });
 
-  
+
 

@@ -70,6 +70,8 @@ export const register = (app: express.Application, db: any) => {
         res.send(formTemplates);
     })
 
+
+
     /**
      * @swagger
      * /formTemplate/{formTemplateId}:
@@ -101,6 +103,46 @@ export const register = (app: express.Application, db: any) => {
             } catch (err) {
                 return res.status(500).json(err.message);
             }
+        })
+
+
+    /**
+     * @swagger
+     * /formTemplate/{formTemplateId}:
+     *   get:
+     *     summary: Returns a Form Template given a Form Template ID
+     *     description: Given a Form Template ID returns the corresponding Form Template.
+     *     responses:
+     *       404:
+     *         description: Form template not found
+     *       405:
+     *         description: Validation exception
+     *       200:
+     *         description: Most recent version of requested form template.
+     *       500:
+     *         description: Server side error
+     */
+    app.get('/formTemplate/:formTemplateId',
+    async (req: express.Request, res: express.Response) => {
+            const id = req.params.formTemplateId;
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(405).json({ errors: errors.array() });
+            }
+            try {
+                const formTemplate = await integration.getFormTemplateByID(id, db);
+
+                if (formTemplate === '{}') {
+                    return res.status(404).json({errors: "Form Template not found"})
+
+                } else {
+                    res.status(200).json(formTemplate);
+                }
+
+            } catch (err) {
+                return res.status(500).json(err.message);
+            }
+
         })
 
     /**

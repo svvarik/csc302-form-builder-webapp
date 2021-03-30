@@ -1,6 +1,7 @@
 // const formCollection = db.collection("forms")
 // const sectionCollection = db.collection("sections")
 // const fieldCollection = db.collection("fields")
+import { json } from "body-parser";
 import Form from "./classes/Form";
 
 const formCollectionName = "forms"
@@ -28,7 +29,14 @@ const getFormTemplates = async (db: any) : Promise<number> => {
     return formCollection.find().toArray()
 }
 
-const updateForm = async (form: Form, formID: String, db: any, test=false) : Promise<number> => {
+const getFormTemplateByID = async (formID: string, db: any): Promise<string> => {
+    const formCollection = db.collection("forms")
+    // we only want to return one, the newest
+    const form =  await formCollection.findOne({"formID":formID}).sort({x:-1})
+    return JSON.stringify(form)
+}
+
+const updateForm = async (form: Form, formID: string, db: any, test=false) : Promise<number> => {
     const formCollection = test ? db.collection(testFormColectionName): db.collection(formCollectionName)
 
     try {
@@ -39,7 +47,7 @@ const updateForm = async (form: Form, formID: String, db: any, test=false) : Pro
     }
 }
 
-const deleteForm = async (formID: String, db: any, test=false): Promise<number> => {
+const deleteForm = async (formID: string, db: any, test=false): Promise<number> => {
     const formCollection = test ? db.collection(testFormColectionName): db.collection(formCollectionName)
     try {
         await formCollection.deleteOne({"formID":formID})
@@ -49,4 +57,4 @@ const deleteForm = async (formID: String, db: any, test=false): Promise<number> 
     }
 }
 
-export {getFormID, insertForm, getFormTemplates, updateForm, deleteForm}
+export {getFormID, insertForm, getFormTemplates, getFormTemplateByID, updateForm, deleteForm}
