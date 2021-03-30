@@ -19,6 +19,19 @@ describe('tests', () => {
     cy.dataCy("searchContainer").should('exist')
   })
 
+  it('handles auth toggling', () => {
+    cy.dataCy('userRole').should('exist')
+    cy.dataCy('userRole').contains('DATA_ADMIN')
+
+    cy.dataCy('userSwitch').click()
+    cy.dataCy('userRole').contains('DOCTOR')
+
+    cy.dataCy('userSwitch').click()
+    cy.dataCy('userRole').contains('DATA_ADMIN')
+    
+
+  })
+
 })
 
 export {}

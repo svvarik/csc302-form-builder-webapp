@@ -1,17 +1,21 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import {
   AppBar,
   Button,
   Container,
   Toolbar,
+  Typography,
   fade,
   InputBase,
   makeStyles,
+  Switch,
   Theme,
 } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import { searchForms } from '../store/slices/FormList.slice'
+import { selectAuth } from '../store/store'
+import { toggleUser } from '../store/slices/Auth.slice'
 
 const useStyles = makeStyles((theme: Theme) => ({
   grow: {
@@ -53,10 +57,21 @@ const useStyles = makeStyles((theme: Theme) => ({
       width: '40ch',
     },
   },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  toggleContainer: {
+    display: 'flex',
+    width: 190,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 }))
 
 const NavbarComponent: React.FC = (props: any) => {
   const classes = useStyles()
+  const { user } = useSelector(selectAuth)
   const dispatch = useDispatch()
   const location = useLocation()
   const history = useHistory()
@@ -72,7 +87,7 @@ const NavbarComponent: React.FC = (props: any) => {
     <div className={classes.grow}>
       <AppBar position='static'>
         <Container maxWidth='md'>
-          <Toolbar disableGutters>
+          <Toolbar className={classes.toolbar} disableGutters>
             {pathname === '/' ? (
               <div className={classes.search} data-cy='searchContainer'>
                 <div className={classes.searchIcon}>
@@ -100,6 +115,16 @@ const NavbarComponent: React.FC = (props: any) => {
                 HOME
               </Button>
             )}
+            <div className={classes.toggleContainer}>
+              <Typography data-cy='userRole'>{user}</Typography>
+              <Switch
+                data-cy='userSwitch'
+                checked={user === 'DOCTOR'}
+                onChange={() => {
+                  dispatch(toggleUser())
+                }}
+              />
+            </div>
           </Toolbar>
         </Container>
       </AppBar>

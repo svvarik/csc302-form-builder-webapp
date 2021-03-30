@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { TextField, Button, makeStyles } from '@material-ui/core'
+import { TextField, makeStyles } from '@material-ui/core'
 import { v4 as uuidv4 } from 'uuid' // eslint-disable-line import/no-extraneous-dependencies
 import { FormTemplateProps } from '../types/FormTemplate.type'
 import Section from './Section.component'
 import Add from './Add.component'
 
-interface SectionInfo {
+export interface SectionInfo {
   title: string
   fields: Array<any>
   sectionId: string

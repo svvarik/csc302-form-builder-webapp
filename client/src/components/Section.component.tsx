@@ -83,7 +83,7 @@ const Section: React.FC<SectionProps> = (props) => {
     <div className={classes.root}>
       <Accordion elevation={3}>
         <AccordionSummary
-          expandIcon={<AddCircleRoundedIcon />}
+          expandIcon={<AddCircleRoundedIcon data-cy='expandSectionIcon' />}
           data-cy='expandMore'
           aria-controls='panel1a-content'
           id='panel1a-header'

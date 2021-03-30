@@ -3,7 +3,6 @@
     "prefix": ["nrx", "nrd"],
     "body": [
       "import { createSlice } from '@reduxjs/toolkit'",
-      "import { HYDRATE } from 'next-redux-wrapper'",
       "",
       "export type ${TM_FILENAME_BASE/(.slice)//}State = {\n\t$1\n}",
       "const initialState: ${TM_FILENAME_BASE/(.slice)//}State = {}",
