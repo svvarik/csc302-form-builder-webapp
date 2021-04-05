@@ -39,8 +39,11 @@ const getFormTemplateByID = async (formID: string, db: any): Promise<string> => 
 const updateForm = async (form: Form, formID: string, db: any, test=false) : Promise<number> => {
     const formCollection = test ? db.collection(testFormColectionName): db.collection(formCollectionName)
 
+    var newForm = form.getJson()
+    newForm.formID = formID
+
     try {
-        await formCollection.update({"formID":formID}, form.getJson())
+        await formCollection.update({"formID":formID}, newForm)
         return 200;
     } catch (err: any) {
         return 401;
