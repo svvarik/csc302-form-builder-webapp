@@ -5,7 +5,7 @@ import {
   Radio,
   makeStyles,
 } from '@material-ui/core'
-import React from 'react'
+import React, { useState } from 'react'
 import { BaseInputProps } from '../../types/Field.type'
 
 const useStyles = makeStyles((theme) => ({
@@ -17,26 +17,58 @@ const useStyles = makeStyles((theme) => ({
 const TFInput: React.FC<BaseInputProps> = (props) => {
   const classes = useStyles()
 
+  const { enabled, response } = props
+
+  const [enabledState, setEnabled] = useState(enabled)
+  const [value, setValue] = useState('')
+
   const handleTFChange = (event: { target: { value: any } }) => {
+    setValue(event.target.value)
     props.sendResponse({ response: event.target.value })
   }
 
+  if (enabledState === false) {
+    return (
+      <div>
+        <FormControl className={classes.input}>
+          <RadioGroup value={response} data-cy='tfInputRadioGroup'>
+            <FormControlLabel
+              data-cy='tfInputTrue'
+              disabled
+              value='True'
+              control={<Radio color='primary' />}
+              label='True'
+            />
+            <FormControlLabel
+              data-cy='tfInputFalse'
+              disabled
+              value='False'
+              control={<Radio color='primary' />}
+              label='False'
+            />
+          </RadioGroup>
+        </FormControl>
+      </div>
+    )
+  }
   return (
     <div>
       <FormControl className={classes.input}>
-        <RadioGroup onChange={handleTFChange} data-cy='tfInputRadioGroup'>
+        <RadioGroup
+          onChange={handleTFChange}
+          value={value}
+          data-cy='tfInputRadioGroup'
+        >
           <FormControlLabel
             data-cy='tfInputTrue'
-            disabled
             value='True'
-            control={<Radio />}
+            control={<Radio color='primary' />}
             label='True'
           />
           <FormControlLabel
             data-cy='tfInputFalse'
-            disabled
             value='False'
-            control={<Radio />}
+            control={<Radio color='primary' />}
             label='False'
           />
         </RadioGroup>

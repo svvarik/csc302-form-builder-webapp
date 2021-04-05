@@ -6,7 +6,7 @@ import {
   TextField,
   makeStyles,
 } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { MCInputProps } from '../../types/Field.type'
 import Add from '../Add.component'
 
@@ -17,13 +17,36 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const MCInput: React.FC<MCInputProps> = (props) => {
+  const { enabled, response, options } = props
+
   const [responseState, setResponse] = React.useState('')
   const [answers, setAnswer] = React.useState<string[]>([''])
+  const [enabledState, setEnabled] = React.useState(enabled)
   const classes = useStyles()
 
-  const handleMCChange = (event: { target: { value: any } }) => {
-    setResponse(event.target.value)
+  useEffect(() => {
     props.sendResponse({ response: responseState, options: answers })
+  }, [responseState])
+
+  const handleMCChange = (count: number) => (event: any) => {
+    if (typeof options === 'undefined') {
+      if (responseState === answers[count]) {
+        setResponse('')
+        props.sendResponse({ response: responseState, options: answers })
+      } else {
+        setResponse(answers[count])
+        props.sendResponse({ response: responseState, options: answers })
+      }
+    } else if (typeof options !== 'undefined') {
+      const optionsCopy = options
+      if (responseState === options[count]) {
+        setResponse('')
+        props.sendResponse({ response: responseState, options: optionsCopy })
+      } else {
+        setResponse(options[count])
+        props.sendResponse({ response: responseState, options: optionsCopy })
+      }
+    }
   }
 
   const newAnswer = () => {
@@ -43,6 +66,55 @@ const MCInput: React.FC<MCInputProps> = (props) => {
 
   const renderAnswers = (): any => {
     let count = -1
+    // Condition for read only mode
+    if (enabledState === false && typeof options !== 'undefined') {
+      return options.map((ans: string) => {
+        count += 1
+        return (
+          <FormControlLabel
+            key={count}
+            disabled
+            value={ans}
+            control={<Radio color='primary' data-cy={`mcRadio${count}`} />}
+            label={
+              <TextField
+                data-cy={`mcTextField${count}`}
+                disabled
+                value={ans}
+                color='primary'
+                placeholder='option'
+                onChange={handleOptionChange(count)}
+              />
+            }
+          />
+        )
+      })
+    }
+    // Condition for form filler mode
+    if (enabledState && typeof options !== 'undefined') {
+      return options.map((ans: string) => {
+        count += 1
+        return (
+          <FormControlLabel
+            key={count}
+            value={ans}
+            onChange={handleMCChange(count)}
+            control={<Radio color='primary' data-cy={`mcRadio${count}`} />}
+            label={
+              <TextField
+                data-cy={`mcTextField${count}`}
+                disabled
+                value={ans}
+                color='primary'
+                placeholder='option'
+                onChange={handleOptionChange(count)}
+              />
+            }
+          />
+        )
+      })
+    }
+    // Condition for form creation
     return answers.map((ans: string) => {
       count += 1
       return (
@@ -64,14 +136,21 @@ const MCInput: React.FC<MCInputProps> = (props) => {
     })
   }
 
+  if (typeof options !== 'undefined') {
+    return (
+      <div>
+        <FormControl className={classes.input}>
+          <RadioGroup value={response} data-cy='mcRadioGroup'>
+            {renderAnswers()}
+          </RadioGroup>
+        </FormControl>
+      </div>
+    )
+  }
   return (
     <div>
       <FormControl className={classes.input}>
-        <RadioGroup
-          value={responseState}
-          onChange={handleMCChange}
-          data-cy='mcRadioGroup'
-        >
+        <RadioGroup value={responseState} data-cy='mcRadioGroup'>
           {renderAnswers()}
         </RadioGroup>
       </FormControl>

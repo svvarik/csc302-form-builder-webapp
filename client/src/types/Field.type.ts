@@ -5,7 +5,8 @@ export type FieldProps = {
 
 export type BaseInputProps = {
   sendResponse: (val: any) => void
-  response?: string
+  response?: string | string[] | number
+  enabled: boolean
 }
 
 export interface MCInputProps extends BaseInputProps {

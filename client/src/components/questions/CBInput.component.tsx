@@ -5,7 +5,7 @@ import {
   makeStyles,
   Checkbox,
 } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { MCInputProps } from '../../types/Field.type'
 import Add from '../Add.component'
 
@@ -16,13 +16,42 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const CBInput: React.FC<MCInputProps> = (props) => {
-  const [responseState, setResponse] = React.useState('')
+  const { enabled, response, options } = props
+  const [responseState, setResponse] = React.useState<string[]>([])
   const [answers, setAnswer] = React.useState<string[]>([''])
   const classes = useStyles()
 
-  const handleCBChange = (count: number) => (event: any) => {
+  useEffect(() => {
     props.sendResponse({ response: responseState, options: answers })
-    // TODO implement with form response
+  }, [responseState])
+
+  const handleCBChange = (count: number) => (event: any) => {
+    if (typeof options === 'undefined') {
+      if (responseState.includes(answers[count])) {
+        const responseCopy = responseState.filter(
+          (res) => res !== answers[count]
+        )
+        setResponse(responseCopy)
+        props.sendResponse({ response: responseCopy, options: answers })
+      } else {
+        const responseCopy = responseState.concat(answers[count])
+        setResponse(responseCopy)
+        props.sendResponse({ response: responseCopy, options: answers })
+      }
+    } else if (typeof options !== 'undefined') {
+      const optionsCopy = options
+      if (responseState.includes(options[count])) {
+        const responseCopy = responseState.filter(
+          (res) => res !== options[count]
+        )
+        setResponse(responseCopy)
+        props.sendResponse({ response: responseCopy, options: optionsCopy })
+      } else {
+        const responseCopy = responseState.concat(options[count])
+        setResponse(responseCopy)
+        props.sendResponse({ response: responseCopy, options: optionsCopy })
+      }
+    }
   }
 
   const newAnswer = () => {
@@ -42,6 +71,74 @@ const CBInput: React.FC<MCInputProps> = (props) => {
 
   const renderAnswers = (): any => {
     let count = -1
+    // Condition for read only mode
+    if (
+      enabled === false &&
+      typeof options !== 'undefined' &&
+      typeof response !== 'undefined' &&
+      typeof response !== 'number'
+    ) {
+      return options.map((ans: string) => {
+        count += 1
+        return (
+          <FormControlLabel
+            key={count}
+            disabled
+            value={ans}
+            onChange={handleCBChange(count)}
+            control={
+              <Checkbox
+                checked={response.includes(ans)}
+                color='primary'
+                data-cy={`checkbox${count}`}
+              />
+            }
+            label={
+              <TextField
+                disabled
+                data-cy={`cbTextField${count}`}
+                value={ans}
+                color='primary'
+                placeholder='option'
+                onChange={handleOptionChange(count)}
+              />
+            }
+          />
+        )
+      })
+    }
+
+    // Condition for form filler mode
+    if (enabled && typeof options !== 'undefined') {
+      return options.map((ans: string) => {
+        count += 1
+        return (
+          <FormControlLabel
+            key={count}
+            value={ans}
+            onChange={handleCBChange(count)}
+            control={
+              <Checkbox
+                checked={responseState.includes(ans)}
+                color='primary'
+                data-cy={`checkbox${count}`}
+              />
+            }
+            label={
+              <TextField
+                disabled
+                data-cy={`cbTextField${count}`}
+                value={ans}
+                color='primary'
+                placeholder='option'
+                onChange={handleOptionChange(count)}
+              />
+            }
+          />
+        )
+      })
+    }
+    // Condition for form creation
     return answers.map((ans: string) => {
       count += 1
       return (
@@ -64,6 +161,15 @@ const CBInput: React.FC<MCInputProps> = (props) => {
     })
   }
 
+  if (typeof options !== 'undefined') {
+    return (
+      <div>
+        <FormControl className={classes.input} data-cy='cbGroup'>
+          {renderAnswers()}
+        </FormControl>
+      </div>
+    )
+  }
   return (
     <div>
       <FormControl className={classes.input} data-cy='cbGroup'>

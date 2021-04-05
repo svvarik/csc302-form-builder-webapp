@@ -123,15 +123,15 @@ const Field: React.FC<FieldProps> = (props) => {
   const renderQuestion = () => {
     switch (jsonState.type) {
       case 'TEXT':
-        return <TextInput sendResponse={getInputState} />
+        return <TextInput enabled={false} sendResponse={getInputState} />
       case 'INT':
-        return <NumInput sendResponse={getInputState} />
+        return <NumInput enabled={false} sendResponse={getInputState} />
       case 'MC':
-        return <MCInput sendResponse={getInputState} />
+        return <MCInput enabled={false} sendResponse={getInputState} />
       case 'CB':
-        return <CBInput sendResponse={getInputState} />
+        return <CBInput enabled={false} sendResponse={getInputState} />
       case 'TF':
-        return <TFInput sendResponse={getInputState} />
+        return <TFInput enabled={false} sendResponse={getInputState} />
       default:
         return ''
     }
