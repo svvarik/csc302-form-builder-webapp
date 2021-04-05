@@ -49,7 +49,7 @@ test('Test Section getJson', () => {
     expect(section.getJson()).toEqual({
         "title": title,
         "sectionID": id,
-        "subSections": sections,
+        "sections": sections,
         "fields": fields
     });
 });
@@ -60,7 +60,7 @@ test('Test simple build Section', () => {
     expect(newForm.getJson()).toEqual({
         "title": title,
         "sectionID": id,
-        "subSections": sections,
+        "sections": sections,
         "fields": fields
     });
 });
@@ -71,21 +71,21 @@ test('Test complex build Section', () => {
     expect(newForm.getJson()).toEqual({
         "title": title,
         "sectionID": id,
-        "subSections": [
+        "sections": [
             {
                 "title": "testName2",
                 "sectionID": "testID2",
-                "subSections": sections,
+                "sections": sections,
                 "fields": fields
             },
             {
                 "title": "testName3",
                 "sectionID": "testID3",
-                "subSections": [
+                "sections": [
                     {
                         "title": "testName4",
                         "sectionID": "testID4",
-                        "subSections": sections,
+                        "sections": sections,
                         "fields": fields
                     }
                 ],

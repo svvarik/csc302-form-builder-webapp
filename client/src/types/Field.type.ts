@@ -1,14 +1,24 @@
 export type FieldProps = {
   sendData: (val: any) => void
-  fieldId: string
+  fieldID: string
+  fieldData?: FieldInfo
 }
 
 export type BaseInputProps = {
   sendResponse: (val: any) => void
   response?: string | string[] | number
   enabled: boolean
+  readOnly?: boolean
 }
 
 export interface MCInputProps extends BaseInputProps {
-  options?: string[]
+  optionsData?: string[]
+}
+
+export interface FieldInfo {
+  title: string
+  type: string
+  response: string
+  options: Array<string>
+  fieldID: string
 }

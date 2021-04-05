@@ -30,7 +30,7 @@ class Section extends AbstractFormItem {
         const jsonObj = {
             "title": this.getTitle(),
             "sectionID": this.getID(),
-            "subSections": this.subSections.map((section: Section) => {
+            "sections": this.subSections.map((section: Section) => {
                 return section.getJson()
             }),
             "fields": this.fields.map((field: Field)=> {

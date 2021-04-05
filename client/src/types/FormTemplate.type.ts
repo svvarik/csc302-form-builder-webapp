@@ -1,4 +1,11 @@
+import { SectionInfo } from './Section.type'
+
 export type FormTemplateProps = {
-  dateCreated: (val: any) => void
   sendForm: (val: any) => void
+  formData?: {
+    title?: string
+    desc?: string
+    formID?: string
+    sections?: SectionInfo[]
+  }
 }

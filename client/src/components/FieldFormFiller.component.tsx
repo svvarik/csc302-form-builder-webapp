@@ -100,7 +100,7 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
               <MCInput
                 enabled
                 response={responseState}
-                options={currOptions}
+                optionsData={currOptions}
                 sendResponse={getInputState}
               />
             )
@@ -109,7 +109,7 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
               <CBInput
                 enabled
                 response={responseState}
-                options={currOptions}
+                optionsData={currOptions}
                 sendResponse={getInputState}
               />
             )
@@ -148,6 +148,7 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
               enabled={false}
               response={currResponse}
               sendResponse={getInputState}
+              readOnly
             />
           )
         case 'INT':
@@ -156,6 +157,7 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
               enabled={false}
               response={currResponse}
               sendResponse={getInputState}
+              readOnly
             />
           )
         case 'MC':
@@ -163,8 +165,9 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
             <MCInput
               enabled={false}
               response={currResponse}
-              options={currOptions}
+              optionsData={currOptions}
               sendResponse={getInputState}
+              readOnly
             />
           )
         case 'CB':
@@ -172,8 +175,9 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
             <CBInput
               enabled={false}
               response={currResponse}
-              options={currOptions}
+              optionsData={currOptions}
               sendResponse={getInputState}
+              readOnly
             />
           )
         case 'TF':
@@ -182,6 +186,7 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
               enabled={false}
               response={currResponse}
               sendResponse={getInputState}
+              readOnly
             />
           )
         default:

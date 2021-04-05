@@ -5,21 +5,13 @@ import {
   AccordionSummary,
   AccordionDetails,
   TextField,
-  Button,
   makeStyles,
 } from '@material-ui/core'
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded'
-import { SectionProps } from '../types/Section.type'
-import Field from './Field.component'
-import Add from './Add.component'
-
-interface FieldInfo {
-  title: string
-  type: string
-  response: string
-  options: Array<string>
-  fieldId: string
-}
+import { SectionProps } from '../../types/Section.type'
+import FieldTemplate from './FieldTemplate.component'
+import Add from '../Add.component'
+import { FieldInfo } from '../../types/Field.type'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,17 +36,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Section: React.FC<SectionProps> = (props) => {
+const SectionTemplate: React.FC<SectionProps> = (props) => {
   const classes = useStyles()
-  const [title, setTitle] = useState()
-  const [fields, setFields] = useState<Array<FieldInfo>>([])
+
+  const { sectionData } = props
+
+  const [title, setTitle] = useState(sectionData ? sectionData.title : '')
+  const [fields, setFields] = useState<Array<FieldInfo>>(
+    sectionData ? sectionData.fields : []
+  )
+
+  // alert(title)
 
   useEffect(() => {
-    const { sectionId: id } = props
+    const { sectionID: id } = props
     props.sendData({
       title,
       fields,
-      sectionId: id,
+      sectionID: id,
       sections: [], // This is to model recursive section structure, but is right now set off
     })
   }, [title, fields])
@@ -62,7 +61,7 @@ const Section: React.FC<SectionProps> = (props) => {
   const getFieldState = (val: any): void => {
     const updatedFields: Array<FieldInfo> = [...fields]
     const updatedIndex = fields.findIndex(
-      (field) => field.fieldId === val.fieldId
+      (field) => field.fieldID === val.fieldID
     )
     updatedFields[updatedIndex] = val
     setFields(updatedFields)
@@ -71,7 +70,7 @@ const Section: React.FC<SectionProps> = (props) => {
   const addField = () => {
     setFields([
       ...fields,
-      { fieldId: uuidv4(), title: '', type: '', response: '', options: [] },
+      { fieldID: uuidv4(), title: '', type: '', response: '', options: [] },
     ])
   }
 
@@ -80,11 +79,10 @@ const Section: React.FC<SectionProps> = (props) => {
   }
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-cy='sectionTemplate'>
       <Accordion elevation={3}>
         <AccordionSummary
-          expandIcon={<AddCircleRoundedIcon data-cy='expandSectionIcon' />}
-          data-cy='expandMore'
+          expandIcon={<AddCircleRoundedIcon data-cy='expandMore' />}
           aria-controls='panel1a-content'
           id='panel1a-header'
           className={classes.summary}
@@ -97,16 +95,18 @@ const Section: React.FC<SectionProps> = (props) => {
             onClick={(event) => event.stopPropagation()}
             onFocus={(event) => event.stopPropagation()}
             onChange={handleTitleChange}
+            value={title}
           />
         </AccordionSummary>
         <AccordionDetails className={classes.container}>
           {fields.map((field) => {
             return (
               <div className={classes.fieldRow}>
-                <Field
-                  key={field.fieldId}
+                <FieldTemplate
+                  key={field.fieldID}
                   sendData={getFieldState}
-                  fieldId={field.fieldId}
+                  fieldID={field.fieldID}
+                  fieldData={field}
                 />
               </div>
             )
@@ -118,4 +118,4 @@ const Section: React.FC<SectionProps> = (props) => {
   )
 }
 
-export default Section
+export default SectionTemplate

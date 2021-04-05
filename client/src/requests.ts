@@ -45,6 +45,40 @@ export async function PublishForm(jsonString: string): Promise<Response> {
   }
 }
 
+/**
+ * @param jsonString The json representation of the form
+ * @param id The id of the form
+ * @returns The status
+ */
+export async function UpdateForm(
+  jsonString: string,
+  formID: string
+): Promise<Response> {
+  const payload = jsonString
+
+  const url = `http://localhost:8080/formTemplate/${formID}`
+  const request = new Request(url, {
+    method: 'PATCH',
+    body: payload,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  try {
+    const updateRequest = await fetch(url, {
+      method: 'PATCH',
+      body: payload,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    return updateRequest
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
 export async function GetAllForms(): Promise<Response> {
   const url = 'http://localhost:8080/formResponse/newForms'
   const request = new Request(url, {
@@ -73,6 +107,23 @@ export async function DeleteForm(id: string): Promise<Response> {
   try {
     const deleteFormRequest = await fetch(request)
     return deleteFormRequest
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+export async function GetFormTemplate(id: string): Promise<Response> {
+  const url = `http://localhost:8080/formTemplate/${id}`
+  const request = new Request(url, {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  try {
+    const getFormRequest = await fetch(request)
+    return getFormRequest
   } catch (err) {
     console.error(err)
     throw err

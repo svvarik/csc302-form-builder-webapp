@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch, BrowserRouter } from 'react-router-dom'
-import Configure from './components/Configure.component'
+import Configure from './components/FormTemplate/Configure.component'
 import Navbar from './components/Navbar.component'
 import Homepage from './components/Homepage.component'
 
@@ -20,10 +20,10 @@ const App: React.FC = () => {
               </>
             )}
           />
+          <Route exact path='/configure-form' render={() => <Configure />} />
           <Route
-            exact
-            path='/configure-new-form'
-            render={() => <Configure />}
+            path='/configure-form/:formID'
+            render={(props) => <Configure formID={props.match.params.formID} />}
           />
         </Switch>
       </BrowserRouter>

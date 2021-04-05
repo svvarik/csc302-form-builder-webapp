@@ -37,7 +37,7 @@ const Homepage: React.FC = () => {
               </Typography>
             </Grid>
             <Grid container item xs={6} spacing={3} justify='flex-end'>
-              <Link to='/configure-new-form' className={classes.link}>
+              <Link to='/configure-form' className={classes.link}>
                 <Button
                   data-cy='newFormButton'
                   className={classes.newButton}

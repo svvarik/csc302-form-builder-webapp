@@ -17,11 +17,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const MCInput: React.FC<MCInputProps> = (props) => {
-  const { enabled, response, options } = props
+  const { enabled, response, optionsData, readOnly } = props
 
-  const [responseState, setResponse] = React.useState('')
-  const [answers, setAnswer] = React.useState<string[]>([''])
-  const [enabledState, setEnabled] = React.useState(enabled)
+  const [responseState, setResponse] = React.useState(response || '')
+  const [answers, setAnswer] = React.useState<string[]>(
+    optionsData && optionsData.length > 0 ? optionsData : ['']
+  )
+
   const classes = useStyles()
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const MCInput: React.FC<MCInputProps> = (props) => {
   }, [responseState])
 
   const handleMCChange = (count: number) => (event: any) => {
-    if (typeof options === 'undefined') {
+    if (typeof optionsData === 'undefined') {
       if (responseState === answers[count]) {
         setResponse('')
         props.sendResponse({ response: responseState, options: answers })
@@ -37,13 +39,13 @@ const MCInput: React.FC<MCInputProps> = (props) => {
         setResponse(answers[count])
         props.sendResponse({ response: responseState, options: answers })
       }
-    } else if (typeof options !== 'undefined') {
-      const optionsCopy = options
-      if (responseState === options[count]) {
+    } else if (typeof optionsData !== 'undefined') {
+      const optionsCopy = optionsData
+      if (responseState === optionsData[count]) {
         setResponse('')
         props.sendResponse({ response: responseState, options: optionsCopy })
       } else {
-        setResponse(options[count])
+        setResponse(optionsData[count])
         props.sendResponse({ response: responseState, options: optionsCopy })
       }
     }
@@ -67,8 +69,8 @@ const MCInput: React.FC<MCInputProps> = (props) => {
   const renderAnswers = (): any => {
     let count = -1
     // Condition for read only mode
-    if (enabledState === false && typeof options !== 'undefined') {
-      return options.map((ans: string) => {
+    if (readOnly) {
+      return answers.map((ans: string) => {
         count += 1
         return (
           <FormControlLabel
@@ -91,8 +93,8 @@ const MCInput: React.FC<MCInputProps> = (props) => {
       })
     }
     // Condition for form filler mode
-    if (enabledState && typeof options !== 'undefined') {
-      return options.map((ans: string) => {
+    if (enabled) {
+      return answers.map((ans: string) => {
         count += 1
         return (
           <FormControlLabel
@@ -136,7 +138,7 @@ const MCInput: React.FC<MCInputProps> = (props) => {
     })
   }
 
-  if (typeof options !== 'undefined') {
+  if (enabled) {
     return (
       <div>
         <FormControl className={classes.input}>

@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { TextField, makeStyles } from '@material-ui/core'
+import { TextField, Button, makeStyles } from '@material-ui/core'
 import { v4 as uuidv4 } from 'uuid' // eslint-disable-line import/no-extraneous-dependencies
-import { FormTemplateProps } from '../types/FormTemplate.type'
-import Section from './Section.component'
-import Add from './Add.component'
-
-export interface SectionInfo {
-  title: string
-  fields: Array<any>
-  sectionId: string
-}
+import { FormTemplateProps } from '../../types/FormTemplate.type'
+import SectionTemplate from './SectionTemplate.component'
+import Add from '../Add.component'
+import { SectionInfo } from '../../types/Section.type'
 
 const useStyles = makeStyles((theme) => ({
   addButton: {
@@ -22,9 +17,19 @@ const useStyles = makeStyles((theme) => ({
 
 const FormTemplate: React.FC<FormTemplateProps> = (props) => {
   const classes = useStyles()
-  const [formTitle, setTitle] = useState()
-  const [formDescription, setDescription] = useState()
-  const [sectionsState, setSections] = useState<Array<SectionInfo>>([])
+  const { formData } = props
+
+  const [formTitle, setTitle] = useState(
+    formData && formData.title ? formData.title : ''
+  )
+  const [formDescription, setDescription] = useState(
+    formData && formData.desc ? formData.desc : ''
+  )
+  const [sectionsState, setSections] = useState<Array<SectionInfo>>(
+    formData && formData.sections ? formData.sections : []
+  )
+
+  // alert('title')
 
   useEffect(() => {
     props.sendForm({
@@ -45,14 +50,14 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
   const addSection = () => {
     setSections([
       ...sectionsState,
-      { title: '', fields: [], sectionId: uuidv4() },
+      { title: '', fields: [], sectionID: uuidv4() },
     ])
   }
 
   const getSectionState = (val: any): void => {
     const updatedSections: Array<SectionInfo> = [...sectionsState]
     const updatedIndex = sectionsState.findIndex(
-      (section) => section.sectionId === val.sectionId
+      (section) => section.sectionID === val.sectionID
     )
     updatedSections[updatedIndex] = val
     setSections(updatedSections)
@@ -67,6 +72,7 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
           data-cy='templateTitle'
           inputProps={{ style: { fontSize: 48, fontWeight: 'lighter' } }}
           fullWidth
+          value={formTitle}
           onChange={handleTitleChange}
         />
       </div>
@@ -76,17 +82,19 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
           label='Form Template Description'
           data-cy='templateDescription'
           fullWidth
+          value={formDescription}
           inputProps={{ style: { fontSize: 24 } }}
           onChange={handleDescriptionChange}
         />
       </div>
       <div className={classes.row}>
         {sectionsState.map((section) => (
-          <Section
-            key={section.sectionId}
+          <SectionTemplate
+            key={section.sectionID}
             title={section.title}
-            sectionId={section.sectionId}
+            sectionID={section.sectionID}
             sendData={getSectionState}
+            sectionData={section}
           />
         ))}
       </div>

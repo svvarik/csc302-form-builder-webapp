@@ -57,6 +57,36 @@ describe('tests', () => {
 
     cy.dataCy('publishTemplateButton').click()
     cy.reload()
+
+    // Validate the ER Form saved 
+    cy.dataCy('formCard').last().contains('ER form')
+
+    // Opens edit form template
+    cy.dataCy('EditFormCardButton').last().click()
+
+    // Change the form title
+    cy.dataCy('templateTitle').find('input').clear()
+    cy.dataCy('templateTitle').type('Edditted ER Form')
+
+    // Adding a new Section 
+    cy.dataCy('addButton').last().click()
+
+    cy.dataCy('sectionTemplate').last().within(($sectionTemplate) => {
+      cy.dataCy('sectionTitle').type('Patient Information')
+      cy.get('.MuiAccordionSummary-expandIcon').last().click()
+
+      // Add Fields
+      cy.dataCy('addButton').first().click()
+      cy.dataCy('titleTextField').type('Blood type')
+      cy.dataCy('formMenuItemSelector').click()
+    }) 
+    cy.dataCy('formMenuItemText').click()
+
+    cy.dataCy('publishTemplateButton').click()
+    cy.reload()
+
+    // Validate the ER Form saved 
+    cy.dataCy('formCard').last().contains('Edditted ER Form')
     cy.dataCy('deleteFormCardButton').last().click()
   })
 

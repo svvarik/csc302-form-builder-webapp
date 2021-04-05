@@ -9,7 +9,7 @@ interface SectionCollection {
     title: string,
     sectionID: string,
     fields: FieldCollection[],
-    subSections: SectionCollection[]
+    sections: SectionCollection[]
 }
 
 interface FieldCollection {

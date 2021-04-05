@@ -16,6 +16,7 @@ import {
   Box,
   Hidden,
 } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import { HighlightOff, AccountCircle } from '@material-ui/icons'
 import { FormConfig } from '../types/FormConfig.type'
 import { removeFromFormListThunk } from '../store/slices/FormList.slice'
@@ -193,9 +194,15 @@ const FormCard: React.FC<FormConfigProps> = ({
         </CardContent>
         <Grid container justify='flex-end'>
           <CardActions className={classes.buttonsBar}>
-            <Button variant='outlined' color='primary'>
-              Edit
-            </Button>
+            <Link to={`/configure-form/${formID}`}>
+              <Button
+                variant='outlined'
+                color='primary'
+                data-cy='EditFormCardButton'
+              >
+                Edit
+              </Button>
+            </Link>
           </CardActions>
         </Grid>
       </Card>

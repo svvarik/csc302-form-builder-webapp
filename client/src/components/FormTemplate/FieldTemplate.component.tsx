@@ -7,12 +7,12 @@ import {
   FormControl,
   makeStyles,
 } from '@material-ui/core'
-import { FieldProps } from '../types/Field.type'
-import TextInput from './questions/TextInput.component'
-import NumInput from './questions/NumInput.component'
-import TFInput from './questions/TFInput.component'
-import MCInput from './questions/MCInput.component'
-import CBInput from './questions/CBInput.component'
+import { FieldProps } from '../../types/Field.type'
+import TextInput from '../questions/TextInput.component'
+import NumInput from '../questions/NumInput.component'
+import TFInput from '../questions/TFInput.component'
+import MCInput from '../questions/MCInput.component'
+import CBInput from '../questions/CBInput.component'
 
 const useStyles = makeStyles((theme) => ({
   centeredRow: {
@@ -40,20 +40,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Field: React.FC<FieldProps> = (props) => {
+const FieldTemplate: React.FC<FieldProps> = (props) => {
   const classes = useStyles()
+
+  const { fieldData } = props
+
   const [jsonState, setJson] = useState({
-    title: '',
-    type: '',
-    response: '',
-    options: [''],
+    title: fieldData ? fieldData.title : '',
+    type: fieldData ? fieldData.type : '',
+    response: fieldData ? fieldData.response : '',
+    options: fieldData ? fieldData.options : [''],
   })
 
   useEffect(() => {
-    const { fieldId: id } = props
+    const { fieldID: id } = props
     props.sendData({
       ...jsonState,
-      fieldId: id,
+      fieldID: id,
     })
   }, [jsonState])
 
@@ -127,9 +130,21 @@ const Field: React.FC<FieldProps> = (props) => {
       case 'INT':
         return <NumInput enabled={false} sendResponse={getInputState} />
       case 'MC':
-        return <MCInput enabled={false} sendResponse={getInputState} />
+        return (
+          <MCInput
+            sendResponse={getInputState}
+            enabled={false}
+            optionsData={fieldData ? fieldData.options : ['']}
+          />
+        )
       case 'CB':
-        return <CBInput enabled={false} sendResponse={getInputState} />
+        return (
+          <CBInput
+            sendResponse={getInputState}
+            enabled={false}
+            optionsData={fieldData ? fieldData.options : ['']}
+          />
+        )
       case 'TF':
         return <TFInput enabled={false} sendResponse={getInputState} />
       default:
@@ -153,4 +168,4 @@ const Field: React.FC<FieldProps> = (props) => {
   )
 }
 
-export default Field
+export default FieldTemplate

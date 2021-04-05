@@ -34,6 +34,7 @@ describe('Form Filler Field Tests', () => {
         currType='CB'
         currOptions={['Blood Test', 'Urine Test']}
         sendData={(_) => { }}
+        readOnly
       />
     )
 

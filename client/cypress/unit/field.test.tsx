@@ -1,10 +1,10 @@
 import { mount } from '@cypress/react'
 import React from 'react'
-import Field from '../../src/components/Field.component'
+import Field from '../../src/components/FormTemplate/FieldTemplate.component'
 
 describe('Field Tests', () => {
   it('renders initial state correctly', () => {
-    mount(<Field fieldId='abc' sendData={(_) => {}} />)
+    mount(<Field fieldID='abc' sendData={(_) => {}} />)
 
     cy.dataCy('fieldBox').should('exist')
 
@@ -21,7 +21,7 @@ describe('Field Tests', () => {
   })
 
   it('renders int field state correctly', () => {
-    mount(<Field fieldId='abc' sendData={(_) => {}} />)
+    mount(<Field fieldID='abc' sendData={(_) => {}} />)
 
     cy.dataCy('formMenuItemSelector').click()
     cy.dataCy('formMenuItemInt').click()
@@ -29,7 +29,7 @@ describe('Field Tests', () => {
   })
 
   it('renders mc field state correctly', () => {
-    mount(<Field fieldId='abc' sendData={(_) => {}} />)
+    mount(<Field fieldID='abc' sendData={(_) => {}} />)
 
     cy.dataCy('formMenuItemSelector').click()
     cy.dataCy('formMenuItemMC').click()

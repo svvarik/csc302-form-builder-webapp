@@ -32,8 +32,8 @@ const getFormTemplates = async (db: any) : Promise<number> => {
 const getFormTemplateByID = async (formID: string, db: any): Promise<string> => {
     const formCollection = db.collection("forms")
     // we only want to return one, the newest
-    const form =  await formCollection.find({"formID":formID}).sort({x: -1}).limit(1).toArray()
-    return JSON.stringify(form)
+    const form = await formCollection.findOne({$query: {"formID": formID}, $orderby: {$natural : -1}})
+    return form
 }
 
 const updateForm = async (form: Form, formID: string, db: any, test=false) : Promise<number> => {
