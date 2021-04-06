@@ -161,7 +161,7 @@ const CBInput: React.FC<MCInputProps> = (props) => {
     })
   }
 
-  if (enabled) {
+  if (enabled || readOnly) {
     return (
       <div>
         <FormControl className={classes.input} data-cy='cbGroup'>

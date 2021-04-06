@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, makeStyles } from '@material-ui/core'
-import TextInput from './questions/TextInput.component'
-import NumInput from './questions/NumInput.component'
-import TFInput from './questions/TFInput.component'
-import MCInput from './questions/MCInput.component'
-import CBInput from './questions/CBInput.component'
-import { FieldFormFillerProps } from '../types/FieldFormFiller.type'
+import TextInput from '../questions/TextInput.component'
+import NumInput from '../questions/NumInput.component'
+import TFInput from '../questions/TFInput.component'
+import MCInput from '../questions/MCInput.component'
+import CBInput from '../questions/CBInput.component'
+import { FieldFormFillerProps } from '../../types/FieldFormFiller.type'
 
 const useStyles = makeStyles((theme) => ({
   centeredRow: {
@@ -78,7 +78,7 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
     if (editableStatus === true) {
       // If we want to be able to select boxes but we have provided options
       if (typeof currOptions !== 'undefined') {
-        switch (currType) {
+        switch (jsonState.type) {
           case 'TEXT':
             return (
               <TextInput
@@ -125,7 +125,7 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
             return ''
         }
       }
-      switch (currType) {
+      switch (jsonState.type) {
         case 'TEXT':
           return <TextInput enabled sendResponse={getInputState} />
         case 'INT':
@@ -141,12 +141,12 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
       }
     } else {
       // Using existing responses
-      switch (currType) {
+      switch (jsonState.type) {
         case 'TEXT':
           return (
             <TextInput
               enabled={false}
-              response={currResponse}
+              response={responseState}
               sendResponse={getInputState}
               readOnly
             />
@@ -155,7 +155,7 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
           return (
             <NumInput
               enabled={false}
-              response={currResponse}
+              response={responseState}
               sendResponse={getInputState}
               readOnly
             />
@@ -164,7 +164,7 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
           return (
             <MCInput
               enabled={false}
-              response={currResponse}
+              response={responseState}
               optionsData={currOptions}
               sendResponse={getInputState}
               readOnly
@@ -184,7 +184,7 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
           return (
             <TFInput
               enabled={false}
-              response={currResponse}
+              response={responseState}
               sendResponse={getInputState}
               readOnly
             />

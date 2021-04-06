@@ -1,6 +1,6 @@
 import { mount } from '@cypress/react'
 import React from 'react'
-import FieldFormFiller from '../../src/components/FieldFormFiller.component'
+import FieldFormFiller from '../../src/components/FormResponse/FieldFormFiller.component'
 
 describe('Form Filler Field Tests', () => {
   it('renders read-only state correctly', () => {
