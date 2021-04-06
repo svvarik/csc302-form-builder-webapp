@@ -3,6 +3,7 @@
 // const fieldCollection = db.collection("fields")
 import { json } from "body-parser";
 import Form from "./classes/Form";
+import FormResponse from './classes/FormResponse';
 
 const formCollectionName = "forms"
 const testFormColectionName = "testforms"
@@ -81,7 +82,7 @@ const getFormResponses = async (db: any): Promise<Array<any>> => {
     }
 }
 
-const saveFormResponse = async (db: any, formResponse: Form): Promise<number> => {
+const saveFormResponse = async (db: any, formResponse: FormResponse): Promise<number> => {
     const forms = db.collection(formResponses)
     try {
         const newForm = formResponse.getJson()
@@ -96,7 +97,7 @@ const saveFormResponse = async (db: any, formResponse: Form): Promise<number> =>
     }
 }
 
-const updateFormResponse = async (formId: string, db: any, formResponse: Form): Promise<number> => {
+const updateFormResponse = async (formId: string, db: any, formResponse: FormResponse): Promise<number> => {
     const forms = db.collection(formResponses)
     const options = {
         upsert: false,

@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as integration from '../integration'
 import Form from '../classes/Form'
+import FormResponse from '../classes/FormResponse'
 import { body, validationResult } from 'express-validator'
 
 export const register = (app: express.Application, db: any) => {
@@ -225,7 +226,7 @@ export const register = (app: express.Application, db: any) => {
             return res.status(400).json({errors: errors.array() })
         }
         try {
-            const formResponse = Form.build(req.body)
+            const formResponse = FormResponse.build(req.body)
             const result = await integration.saveFormResponse(db, formResponse)
             if (result === 200) { 
                 return res.status(200).json()
@@ -249,7 +250,7 @@ export const register = (app: express.Application, db: any) => {
             return res.status(400).json({errors: errors.array() })
         }
         try {
-            const formResponse = Form.build(req.body)
+            const formResponse = FormResponse.build(req.body)
             const result = await integration.updateFormResponse(id, db, formResponse)
             if (result === 400) { 
                 return res.status(400).json()

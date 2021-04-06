@@ -108,7 +108,7 @@ test('Test get all form responses endpoint', async () => {
 
 test('Test create form response', async () => {
 
-  const form = {'title': 'testTitle', 'sections': [] as any[]}
+  const form = {'title': 'testTitle', 'patientId': '123456', 'procedureId': '1234', 'sections': [] as any[]}
 
   const response = (await fetch('http://localhost:8080/formResponse',
   {method: 'POST',
