@@ -3,6 +3,7 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom'
 import Configure from './components/FormTemplate/Configure.component'
 import Navbar from './components/Navbar.component'
 import Homepage from './components/Homepage.component'
+import ConfigureFormResponse from './components/FormResponse/ConfigureFormResponse.component'
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,11 @@ const App: React.FC = () => {
           <Route
             path='/configure-form/:formID'
             render={(props) => <Configure formID={props.match.params.formID} />}
+          />
+          <Route
+            exact
+            path='/fill-in-form/:id'
+            render={(props) => <ConfigureFormResponse {...props} />}
           />
         </Switch>
       </BrowserRouter>

@@ -1,6 +1,6 @@
 export type FieldFormFillerProps = {
   sendData: (val: any) => void
-  fieldId: string
+  fieldID: string
   editableStatus: boolean
   currTitle: string
   currType: string

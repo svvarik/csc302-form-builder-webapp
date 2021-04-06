@@ -46,6 +46,33 @@ export async function PublishForm(jsonString: string): Promise<Response> {
 }
 
 /**
+ * @param formName The name of the form
+ * @param id The id of the form
+ * @param sectionsList The array holding all the various sections of the form
+ *
+ * @returns The string representation of the JSON payload
+ */
+export async function SaveFormResponse(jsonString: string): Promise<Response> {
+  const payload = jsonString
+
+  const url = 'http://localhost:8080/formResponse'
+  const request = new Request(url, {
+    method: 'post',
+    body: payload,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  try {
+    const saveRequest = await fetch(request)
+    return saveRequest
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+/**
  * @param jsonString The json representation of the form
  * @param id The id of the form
  * @returns The status

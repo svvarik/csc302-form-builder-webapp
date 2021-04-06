@@ -125,11 +125,14 @@ export const register = (app: express.Application, db: any) => {
     async (req: express.Request, res: express.Response) => {
             const id = req.params.formTemplateId;
             const errors = validationResult(req);
+            console.log(id, errors)
             if (!errors.isEmpty()) {
                 return res.status(405).json({ errors: errors.array() });
             }
             try {
+                console.log(id)
                 const formTemplate = await integration.getFormTemplateByID(id, db);
+                console.log(formTemplate)
 
                 if (formTemplate === '{}') {
                     return res.status(404).json({errors: "Form Template not found"})
@@ -226,6 +229,8 @@ export const register = (app: express.Application, db: any) => {
             return res.status(400).json({errors: errors.array() })
         }
         try {
+            const formResponseID = integration.getFormID();
+            req.body.formID = formResponseID
             const formResponse = FormResponse.build(req.body)
             const result = await integration.saveFormResponse(db, formResponse)
             if (result === 200) { 

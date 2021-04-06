@@ -6,7 +6,7 @@ describe('Form Filler Field Tests', () => {
   it('renders read-only state correctly', () => {
     mount(
       <FieldFormFiller
-        fieldId='abc'
+        fieldID='abc'
         editableStatus={false}
         currTitle='Test Title'
         currResponse='False'
@@ -27,7 +27,7 @@ describe('Form Filler Field Tests', () => {
   it('renders read-only filled in combobox correctly', () => {
     mount(
       <FieldFormFiller
-        fieldId='abc'
+        fieldID='abc'
         editableStatus={false}
         currTitle='Test Title'
         currResponse='Blood Test'
@@ -49,7 +49,7 @@ describe('Form Filler Field Tests', () => {
   it('selects comboboxes correctly', () => {
     mount(
       <FieldFormFiller
-        fieldId='abc'
+        fieldID='abc'
         editableStatus
         currTitle='Test Title'
         currResponse='Blood Test'
@@ -73,7 +73,7 @@ describe('Form Filler Field Tests', () => {
   it('renders read-only filled in multiple choice correctly', () => {
     mount(
       <FieldFormFiller
-        fieldId='abc'
+        fieldID='abc'
         editableStatus={false}
         currTitle='Test Title'
         currResponse='Blood Test'
@@ -95,7 +95,7 @@ describe('Form Filler Field Tests', () => {
   it('fills in editable multiple choice correctly', () => {
     mount(
       <FieldFormFiller
-        fieldId='abc'
+        fieldID='abc'
         editableStatus
         currTitle='Test Title'
         currType='MC'
@@ -117,7 +117,7 @@ describe('Form Filler Field Tests', () => {
   it('renders read-only filled in number input correctly', () => {
     mount(
       <FieldFormFiller
-        fieldId='abc'
+        fieldID='abc'
         editableStatus={false}
         currTitle='What is your age?'
         currResponse='12'
@@ -140,7 +140,7 @@ describe('Form Filler Field Tests', () => {
   it('fills in number input correctly', () => {
     mount(
       <FieldFormFiller
-        fieldId='abc'
+        fieldID='abc'
         editableStatus
         currTitle='What is your age?'
         currType='INT'
@@ -164,7 +164,7 @@ describe('Form Filler Field Tests', () => {
   it('renders read-only filled in text input correctly', () => {
     mount(
       <FieldFormFiller
-        fieldId='abc'
+        fieldID='abc'
         editableStatus={false}
         currTitle='What is your name?'
         currResponse='Bill'
@@ -187,7 +187,7 @@ describe('Form Filler Field Tests', () => {
   it('fills in text input correctly', () => {
     mount(
       <FieldFormFiller
-        fieldId='abc'
+        fieldID='abc'
         editableStatus
         currTitle='What is your name?'
         currType='TEXT'

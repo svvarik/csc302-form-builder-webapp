@@ -52,10 +52,10 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
   const [responseState, setResponse] = useState(currResponse)
 
   useEffect(() => {
-    const { fieldId: id } = props
+    const { fieldID: id } = props
     props.sendData({
       ...jsonState,
-      fieldId: id,
+      fieldID: id,
     })
   }, [jsonState])
 

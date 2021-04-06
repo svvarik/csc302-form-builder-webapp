@@ -58,7 +58,7 @@ const SectionResponse: React.FC<SectionResponseProps> = (props) => {
   const getFieldState = (val: any): void => {
     const updatedFields: Array<FieldFormFillerProps> = [...fields]
     const updatedIndex = fields.findIndex(
-      (field) => field.fieldId === val.fieldId
+      (field) => field.fieldID === val.fieldID
     )
     updatedFields[updatedIndex] = val
     setFields(updatedFields)
@@ -83,7 +83,7 @@ const SectionResponse: React.FC<SectionResponseProps> = (props) => {
               <div className={classes.fieldRow}>
                 <FieldFormFiller
                   sendData={getFieldState}
-                  fieldId={field.fieldId}
+                  fieldID={field.fieldID}
                   editableStatus={props.editableStatus}
                   currTitle={field.currTitle}
                   currType={field.currType}

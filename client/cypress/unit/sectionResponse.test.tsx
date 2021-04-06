@@ -8,7 +8,7 @@ describe('FormResponse Section Tests', () => {
     title: 'testTitle',
     fields: [
       {
-        fieldId: 'abc',
+        fieldID: 'abc',
         editableStatus: true,
         currResponse: 'False',
         currTitle: 'Field Title',
@@ -17,7 +17,7 @@ describe('FormResponse Section Tests', () => {
         currOptions: [],
       },
       {
-        fieldId: 'abc',
+        fieldID: 'abc',
         editableStatus: true,
         currTitle: 'Test title',
         currResponse: 'Blood Test',
@@ -26,7 +26,7 @@ describe('FormResponse Section Tests', () => {
         sendData: () => {},
       },
       {
-        fieldId: 'abc',
+        fieldID: 'abc',
         editableStatus: true,
         currTitle: 'Test title',
         currResponse: ['Blood Test', 'Urine Test'],

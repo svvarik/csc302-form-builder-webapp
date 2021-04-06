@@ -5,22 +5,22 @@ import { FormCollection } from "../types/collections.type";
 class FormResponse extends AbstractFormItem {
     private desc: string;
     private sections: Section[];
-    private procedureId: string;
-    private patientId: string;
+    private procedureID: string;
+    private patientID: string;
 
-    constructor(title: string, desc: string, procedureId: string, patientId: string, formID?: string, sections: Section[] = []) {
+    constructor(title: string, desc: string, procedureID: string, patientID: string, formID?: string, sections: Section[] = []) {
         super(formID, title)
         this.desc = desc
         this.sections = sections;
-        this.procedureId = procedureId
-        this.patientId = patientId
+        this.procedureID = procedureID
+        this.patientID = patientID
     }
 
     static build = (jsonObj : any) : FormResponse => {
         const sections = jsonObj.sections.map((section: any) => {
             return Section.build(section)
         });
-        return new FormResponse(jsonObj.title, jsonObj.desc, jsonObj.procedureId, jsonObj.patientId, jsonObj.formID, sections);
+        return new FormResponse(jsonObj.title, jsonObj.desc, jsonObj.procedureID, jsonObj.patientID, jsonObj.formID, sections);
     }
 
     addSection = (section: Section) => {
@@ -32,11 +32,11 @@ class FormResponse extends AbstractFormItem {
     }
 
     getProcedureId = () : string => {
-        return this.procedureId
+        return this.procedureID
     }
 
     getPatientId = () : string => {
-        return this.patientId
+        return this.patientID
     }
 
     getJson = () : FormCollection => {
@@ -44,8 +44,8 @@ class FormResponse extends AbstractFormItem {
             "title": this.getTitle(),
             "desc": this.desc,
             "formID": this.getID(),
-            "procedureId": this.getProcedureId(),
-            "patientId": this.getProcedureId(),
+            "procedureID": this.getProcedureId(),
+            "patientID": this.getProcedureId(),
             "sections": this.sections.map((section: Section) => {
                 return section.getJson()
             })
