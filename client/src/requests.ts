@@ -72,6 +72,35 @@ export async function SaveFormResponse(jsonString: string): Promise<Response> {
   }
 }
 
+export async function UpdateFormResponse(
+  jsonString: string,
+  formResponseId: string
+): Promise<Response> {
+  const payload = jsonString
+
+  const url = `http://localhost:8080/formResponse/${formResponseId}`
+  const request = new Request(url, {
+    method: 'PATCH',
+    body: payload,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  try {
+    const updateRequest = await fetch(url, {
+      method: 'PATCH',
+      body: payload,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    return updateRequest
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
 /**
  * @param jsonString The json representation of the form
  * @param id The id of the form

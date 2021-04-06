@@ -56,7 +56,7 @@ const FormResponse: React.FC<FormResponseProps> = (props) => {
       section.fields.forEach(function (field) {
         field.currTitle = field.title
         field.currType = field.type
-        // field.currResponse = field.response
+        if (!editableStatus) field.currResponse = field.response
         field.currOptions = field.options
       })
     })
