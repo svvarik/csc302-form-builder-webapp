@@ -9,7 +9,11 @@ import {
 import { RouteComponentProps, useParams, useLocation } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import FormResponse from './FormResponse.component'
-import { GetFormTemplate, SaveFormResponse } from '../../requests'
+import {
+  GetFormResponse,
+  GetFormTemplate,
+  SaveFormResponse,
+} from '../../requests'
 import { SectionInfo } from '../../types/SectionResponse.type'
 
 interface ParamTypes {
@@ -45,7 +49,13 @@ const ConfigureFormResponse: React.FC<RouteComponentProps> = () => {
 
   const onLoad: () => any = async () => {
     try {
-      const req = await GetFormTemplate(id)
+      let req
+      // alert(search)
+      if (search.length > 0) {
+        req = await GetFormTemplate(id)
+      } else {
+        req = await GetFormResponse(id)
+      }
       const json = await req.json()
       console.log('req', req)
       console.log('json', json)
