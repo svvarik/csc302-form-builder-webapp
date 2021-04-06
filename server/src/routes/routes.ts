@@ -70,8 +70,6 @@ export const register = (app: express.Application, db: any) => {
         res.send(formTemplates);
     })
 
-
-
     /**
      * @swagger
      * /formTemplate/{formTemplateId}:

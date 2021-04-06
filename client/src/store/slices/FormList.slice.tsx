@@ -135,7 +135,9 @@ const FormListSlice = createSlice({
             description: res.desc as string,
             dateCreated: created.toISOString().split('T')[0],
             dateModified: now.toISOString().split('T')[0],
-            procedure: res.sections[0].title as string,
+            procedure: res.sections[0].title
+              ? (res.sections[0].title as string)
+              : 'N/A',
             username: 'Team ITN',
           }
         })
