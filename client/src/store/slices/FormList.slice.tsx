@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { FormConfig } from '../../types/FormConfig.type'
-import { GetAllForms, DeleteForm } from '../../requests'
+import { GetAllForms, DeleteForm, GetAllFormResponses } from '../../requests'
 
 export type FormListState = {
   initialForms: FormConfig[]
@@ -68,6 +68,20 @@ export const fetchFormListThunk = createAsyncThunk(
   async () => {
     try {
       const res = await GetAllForms()
+      return res.json()
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  }
+)
+
+export const fetchAllFormResponsesThunk = createAsyncThunk(
+  'FilledFormList/fetch',
+  async () => {
+    try {
+      const res = await GetAllFormResponses()
+      console.log(res)
       return res.json()
     } catch (err) {
       console.error(err)
@@ -149,6 +163,31 @@ const FormListSlice = createSlice({
       state.loading = false
     })
     builder.addCase(fetchFormListThunk.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(
+      fetchAllFormResponsesThunk.fulfilled,
+      (state, action: PayloadAction<any[]>) => {
+        state.forms = action.payload
+          .filter((res) => res.formID && res.title && res.desc)
+          .map((res) => {
+            const created = new Date(parseInt(res.formID, 10))
+            return {
+              formID: res.formID as string,
+              formTitle: res.title as string,
+              description: res.desc as string,
+              procedure: '',
+              username: '',
+              dateCreated: created.toISOString().split('T')[0],
+              dateModified: created.toISOString().split('T')[0],
+            }
+          })
+      }
+    )
+    builder.addCase(fetchAllFormResponsesThunk.rejected, (state) => {
+      state.loading = false
+    })
+    builder.addCase(fetchAllFormResponsesThunk.pending, (state) => {
       state.loading = true
     })
   },

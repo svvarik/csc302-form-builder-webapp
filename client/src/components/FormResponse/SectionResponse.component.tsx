@@ -73,7 +73,7 @@ const SectionResponse: React.FC<SectionResponseProps> = (props) => {
           id='panel1a-header'
           className={classes.summary}
         >
-          <Typography data-cy='section-response-title' variant='h3'>
+          <Typography data-cy='section-response-title' variant='h5'>
             {title}
           </Typography>
         </AccordionSummary>

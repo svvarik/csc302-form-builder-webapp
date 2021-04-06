@@ -28,6 +28,11 @@ const App: React.FC = () => {
           />
           <Route
             exact
+            path='/patient-forms'
+            render={() => <Homepage isPatientList />}
+          />
+          <Route
+            exact
             path='/fill-in-form/:id'
             render={(props) => <ConfigureFormResponse {...props} />}
           />

@@ -13,7 +13,11 @@ import {
   Theme,
 } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
-import { searchForms } from '../store/slices/FormList.slice'
+import {
+  fetchAllFormResponsesThunk,
+  fetchFormListThunk,
+  searchForms,
+} from '../store/slices/FormList.slice'
 import { selectAuth } from '../store/store'
 import { toggleUser } from '../store/slices/Auth.slice'
 
@@ -116,12 +120,21 @@ const NavbarComponent: React.FC = (props: any) => {
               </Button>
             )}
             <div className={classes.toggleContainer}>
-              <Typography data-cy='userRole'>{user}</Typography>
+              <Typography data-cy='userRole'>
+                {user === 'DOCTOR' ? 'Dr. ITN' : 'Admin ITN'}
+              </Typography>
               <Switch
                 data-cy='userSwitch'
                 checked={user === 'DOCTOR'}
-                onChange={() => {
+                disabled={pathname === '/configure-form'}
+                onClick={() => {
                   dispatch(toggleUser())
+                  if (pathname === '/patient-forms') {
+                    dispatch(fetchAllFormResponsesThunk())
+                    history.push('/')
+                  } else {
+                    dispatch(fetchFormListThunk())
+                  }
                 }}
               />
             </div>

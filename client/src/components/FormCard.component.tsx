@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   Button,
   Typography,
@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom'
 import { HighlightOff, AccountCircle } from '@material-ui/icons'
 import { FormConfig } from '../types/FormConfig.type'
 import { removeFromFormListThunk } from '../store/slices/FormList.slice'
+import { selectAuth } from '../store/store'
 
 type FormConfigProps = FormConfig
 
@@ -76,11 +77,17 @@ const useStyles = makeStyles((theme) => ({
   },
   deleteButton: {
     padding: 0,
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
   userInfo: {
     marginTop: 1,
     position: 'absolute',
     bottom: 150,
+  },
+  deleteButtonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 }))
 
@@ -95,6 +102,7 @@ const FormCard: React.FC<FormConfigProps> = ({
 }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const { user } = useSelector(selectAuth)
 
   const deleteCardHandler: () => void = () => {
     dispatch(removeFromFormListThunk(formID))
@@ -102,23 +110,25 @@ const FormCard: React.FC<FormConfigProps> = ({
 
   return (
     <div id={formID} data-cy='formCard'>
-      <Card className={classes.root}>
+      <Card className={classes.root} variant='outlined'>
         <CardContent>
           <Grid container>
-            <Grid item xs={6}>
+            <Grid item xs={10}>
               <Typography variant='h5' component='h2'>
                 {formTitle}
               </Typography>
             </Grid>
-            <Grid container item xs={6} justify='flex-end'>
-              <IconButton
-                aria-label='delete'
-                data-cy='deleteFormCardButton'
-                className={classes.deleteButton}
-                onClick={deleteCardHandler}
-              >
-                <HighlightOff />
-              </IconButton>
+            <Grid item xs={2} className={classes.deleteButtonContainer}>
+              {user === 'DATA_ADMIN' && (
+                <IconButton
+                  aria-label='delete'
+                  data-cy='deleteFormCardButton'
+                  className={classes.deleteButton}
+                  onClick={deleteCardHandler}
+                >
+                  <HighlightOff />
+                </IconButton>
+              )}
             </Grid>
           </Grid>
           <Typography
@@ -139,10 +149,10 @@ const FormCard: React.FC<FormConfigProps> = ({
           </Typography>
 
           <Grid container spacing={2} className={classes.userInfo}>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <AccountCircle fontSize='large' />
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={10}>
               <Typography
                 variant='body2'
                 component='p'
@@ -193,14 +203,20 @@ const FormCard: React.FC<FormConfigProps> = ({
           </Table>
         </CardContent>
         <Grid container justify='flex-end'>
-          <CardActions className={classes.buttonsBar}>
-            <Link to={`/configure-form/${formID}`}>
+          <CardActions className={classes.buttonsBar} data-cy='formCardAction'>
+            <Link
+              to={
+                user === 'DATA_ADMIN'
+                  ? `/configure-form/${formID}`
+                  : `/fill-in-form/${formID}?editable=true`
+              }
+            >
               <Button
                 variant='outlined'
                 color='primary'
                 data-cy='EditFormCardButton'
               >
-                Edit
+                {user === 'DATA_ADMIN' ? 'EDIT' : 'FILL IN'}
               </Button>
             </Link>
           </CardActions>

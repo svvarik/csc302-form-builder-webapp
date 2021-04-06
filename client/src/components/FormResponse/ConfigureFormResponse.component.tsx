@@ -4,8 +4,9 @@ import {
   makeStyles,
   Button,
   Typography,
+  Link,
 } from '@material-ui/core'
-import { RouteComponentProps, useParams, Link } from 'react-router-dom'
+import { RouteComponentProps, useParams, useLocation } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import FormResponse from './FormResponse.component'
 import { GetFormTemplate, SaveFormResponse } from '../../requests'
@@ -27,8 +28,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ConfigureFormResponse: React.FC<RouteComponentProps> = () => {
   const [currentRequestJson, setCurrentRequestJson] = useState('')
+  const location = useLocation()
+  const { search } = location
   const classes = useStyles()
-
   const getFormState = (val: any): void => {
     setCurrentRequestJson(val)
   }
@@ -39,6 +41,7 @@ const ConfigureFormResponse: React.FC<RouteComponentProps> = () => {
   const [formDesc, setFormDesc] = useState('')
   const [sectionsState, setSections] = useState<Array<SectionInfo>>([])
   const [procedureID, setProcedureID] = useState('')
+  const [editableStatus, setEditableStatus] = useState(false)
 
   const onLoad: () => any = async () => {
     try {
@@ -90,6 +93,14 @@ const ConfigureFormResponse: React.FC<RouteComponentProps> = () => {
     } */
   }, [id])
 
+  useEffect(() => {
+    if (search.length > 0) {
+      setEditableStatus(true)
+    } else {
+      setEditableStatus(false)
+    }
+  }, [search])
+
   return (
     <Container maxWidth='md'>
       <div>
@@ -101,7 +112,7 @@ const ConfigureFormResponse: React.FC<RouteComponentProps> = () => {
               formDesc={formDesc}
               procedureID={procedureID}
               sections={sectionsState}
-              editableStatus
+              editableStatus={editableStatus}
               sendForm={getFormState}
             />
           </Grid>

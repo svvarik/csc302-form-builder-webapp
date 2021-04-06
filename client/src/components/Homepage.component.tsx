@@ -8,8 +8,10 @@ import {
   Container,
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-
+import { useDispatch, useSelector } from 'react-redux'
 import FormList from './FormList.component'
+import { selectAuth } from '../store/store'
+import { fetchAllFormResponsesThunk } from '../store/slices/FormList.slice'
 
 const useStyles = makeStyles((theme) => ({
   cardBox: {
@@ -23,8 +25,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Homepage: React.FC = () => {
+type HomepageProps = {
+  isPatientList?: boolean
+}
+
+const Homepage: React.FC<HomepageProps> = ({ isPatientList }) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const { user } = useSelector(selectAuth)
 
   return (
     <Container maxWidth='md'>
@@ -37,14 +45,36 @@ const Homepage: React.FC = () => {
               </Typography>
             </Grid>
             <Grid container item xs={6} spacing={3} justify='flex-end'>
-              <Link to='/configure-form' className={classes.link}>
+              <Link
+                to={
+                  // eslint-disable-next-line no-nested-ternary
+                  user === 'DATA_ADMIN'
+                    ? '/configure-form'
+                    : isPatientList
+                    ? '/'
+                    : '/patient-forms'
+                }
+                className={classes.link}
+              >
                 <Button
                   data-cy='newFormButton'
                   className={classes.newButton}
                   variant='contained'
                   color='primary'
+                  onClick={() => {
+                    if (user !== 'DATA_ADMIN') {
+                      dispatch(fetchAllFormResponsesThunk())
+                    }
+                  }}
                 >
-                  New Form
+                  {
+                    // eslint-disable-next-line no-nested-ternary
+                    user === 'DATA_ADMIN'
+                      ? 'New Form'
+                      : isPatientList
+                      ? 'Procedure Forms '
+                      : 'View Patients'
+                  }
                 </Button>
               </Link>
             </Grid>
@@ -52,9 +82,9 @@ const Homepage: React.FC = () => {
         </Box>
         <Box my={4}>
           <Typography variant='h5' component='h5' color='textSecondary'>
-            Forms
+            {isPatientList ? 'Patient Forms' : 'Procedure Forms'}
           </Typography>
-          <FormList />
+          <FormList isPatientList={isPatientList} />
         </Box>
       </div>
     </Container>
