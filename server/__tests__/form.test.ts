@@ -3,14 +3,16 @@ import Form from "../src/classes/Form"
 const title = "testName"
 const id = "testID"
 const desc = "testDescription"
+const procedureId = "123456"
 const sections: any[] = []
 
-const form = new Form(title, desc, id, sections)
+const form = new Form(title, desc, procedureId, id, sections)
 
 const simpleBuild = {
     "title": title,
     "formID": id,
     "desc": desc,
+    "procedureId": procedureId,
     "sections": sections
 }
 

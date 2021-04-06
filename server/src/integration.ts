@@ -3,11 +3,13 @@
 // const fieldCollection = db.collection("fields")
 import { json } from "body-parser";
 import Form from "./classes/Form";
+import Procedure from './types/procedure.type'
 import FormResponse from './classes/FormResponse';
 
 const formCollectionName = "forms"
 const testFormColectionName = "testforms"
 const formResponses = 'formResponses'
+const procedures = 'procedures'
 
 const insertForm = async (form: Form, db: any, test=false) : Promise<string> => {
 
@@ -119,4 +121,40 @@ const updateFormResponse = async (formId: string, db: any, formResponse: FormRes
     }
 }
 
-export {getFormID, insertForm, getFormTemplates, getFormTemplateByID, updateForm, deleteForm, getFormResponseById, getFormResponses, saveFormResponse, updateFormResponse}
+const addProcedure = async (db: any, procedure: Procedure): Promise<number> => {
+    const procedureCollect = db.collection(procedures)
+    try {
+        console.log("here")
+        const result = await procedureCollect.insertOne(procedure)
+        if(result.insertedCount === 1) { 
+            return 200
+        } else { 
+            return 500
+        }
+    } catch (err) { 
+        return err
+    }
+}
+
+const getProcedures = async (db: any): Promise<Array<any>> => {
+    const procedureCollect = db.collection(procedures)
+    try {
+        const result = await procedureCollect.find().toArray()
+        return result
+    } catch (err) {
+        return err
+    }
+}
+
+const getProcedureById = async (db: any, id: string): Promise<Array<any>> => {
+    const procedureCollect = db.collection(procedures)
+    console.log("here")
+    try {
+        const result = await procedureCollect.findOne({"id": id})
+        return result
+    } catch (err) {
+        return err
+    }
+}
+
+export {getFormID, insertForm, getFormTemplates, getFormTemplateByID, updateForm, deleteForm, getFormResponseById, getFormResponses, saveFormResponse, updateFormResponse, addProcedure, getProcedures, getProcedureById}

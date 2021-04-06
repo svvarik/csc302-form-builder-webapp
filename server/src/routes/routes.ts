@@ -183,8 +183,6 @@ export const register = (app: express.Application, db: any) => {
      * /formResponse
      */
      app.get('/formResponse/newForms', async (req: express.Request, res: express.Response) => {
-        console.log("HI")
-
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
             return res.status(405).json({ errors: errors.array() });
@@ -196,7 +194,7 @@ export const register = (app: express.Application, db: any) => {
             return res.status(500).json(err.message);
         }
     })
-    
+
     /**
      * @swagger
      * /formResponse/{formResponseId}:
@@ -220,7 +218,7 @@ export const register = (app: express.Application, db: any) => {
     })
 
     /**
-     * @swagger 
+     * @swagger
      * /formResponses
      */
     app.post('/formResponse', async (req: express.Request, res: express.Response) => {
@@ -233,7 +231,7 @@ export const register = (app: express.Application, db: any) => {
             req.body.formID = formResponseID
             const formResponse = FormResponse.build(req.body)
             const result = await integration.saveFormResponse(db, formResponse)
-            if (result === 200) { 
+            if (result === 200) {
                 return res.status(200).json()
             } else {
                 console.log(result)
@@ -245,7 +243,7 @@ export const register = (app: express.Application, db: any) => {
     })
 
     /**
-     * @swagger 
+     * @swagger
      * /formResponses/{formResponseId}
      */
      app.patch('/formResponse/:formResponseId', async (req: express.Request, res: express.Response) => {
@@ -257,15 +255,78 @@ export const register = (app: express.Application, db: any) => {
         try {
             const formResponse = FormResponse.build(req.body)
             const result = await integration.updateFormResponse(id, db, formResponse)
-            if (result === 400) { 
+            if (result === 400) {
                 return res.status(400).json()
-            } else if (result === 404) { 
+            } else if (result === 404) {
                 return res.status(404).json()
             } else {
                 return res.status(200).json()
             }
         } catch (err) {
             console.log(err)
+            return res.status(500).json(err.message);
+        }
+    })
+
+     /**
+     * @swagger
+     * /procedures
+     */
+      app.get('/procedures', async (req: express.Request, res: express.Response) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({errors: errors.array() })
+        }
+        try {
+            const result = await integration.getProcedures(db)
+            return res.status(200).json(result)
+        } catch (err) {
+            return res.status(500).json(err.message);
+        }
+    })
+
+    /**
+     * @swagger
+     * /procedures/{procedureId}
+     */
+     app.get('/procedures/:procedureId', async (req: express.Request, res: express.Response) => {
+        const id = req.params.procedureId;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        try {
+            const procedure = await integration.getProcedureById(db, id)
+            if (!procedure) {
+                return res.status(404).json({errors: "Procedure not found"})
+            } else {
+                return res.status(200).json(procedure);
+            }
+        } catch (err) {
+            return res.status(500).json(err.message);
+        }
+    })
+
+    /**
+     * @swagger
+     * /procedures
+     */
+     app.post('/procedures', async (req: express.Request, res: express.Response) => {
+        console.log(req.body)
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({errors: errors.array() })
+        }
+        try {
+            const newProcedure = req.body
+            console.log(req.body)
+            const result = await integration.addProcedure(db, newProcedure)
+            if (result === 200) {
+                return res.status(200).json()
+            } else {
+                return res.status(500).json()
+            }
+        } catch (err) {
             return res.status(500).json(err.message);
         }
     })

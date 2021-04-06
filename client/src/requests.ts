@@ -191,6 +191,50 @@ export async function GetFormResponse(id: string): Promise<Response> {
   }
 }
 
+export async function getProcedures(): Promise<Response> {
+  const url = 'http://localhost:8080/procedures'
+  const request = new Request(url, {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  const response = await fetch(request)
+  return response
+}
+
+export async function addProcedure(newProcedure: any): Promise<Response> {
+  const payload = JSON.stringify(newProcedure)
+
+  const url = 'http://localhost:8080/procedures'
+  const request = new Request(url, {
+    method: 'post',
+    body: payload,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  const publishRequest = await fetch(request)
+  return publishRequest
+}
+
+export async function getProcedureById(id: string): Promise<Response> {
+  const url = `http://localhost:8080/procedures/${id}`
+  const request = new Request(url, {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  try {
+    const getFormRequest = await fetch(request)
+    return getFormRequest
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
 export async function HelloWorld() {
   const url = 'http://localhost:8080'
   const request = new Request(url, {

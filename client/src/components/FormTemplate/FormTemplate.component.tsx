@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { TextField, Button, makeStyles } from '@material-ui/core'
+import React, { useEffect, useState, useRef } from 'react'
+import { TextField, Button, makeStyles, Typography } from '@material-ui/core'
 import { v4 as uuidv4 } from 'uuid' // eslint-disable-line import/no-extraneous-dependencies
 import { FormTemplateProps } from '../../types/FormTemplate.type'
 import SectionTemplate from './SectionTemplate.component'
 import Add from '../Add.component'
 import { SectionInfo } from '../../types/Section.type'
+import ProcedureInput from './ProcedureInput.component'
+import { getProcedureById } from '../../requests'
 
 const useStyles = makeStyles((theme) => ({
   addButton: {
@@ -19,6 +21,14 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
   const classes = useStyles()
   const { formData } = props
 
+  const [procedureId, setProcedureId] = useState(
+    formData && formData.procedureId ? formData.procedureId : ''
+  )
+
+  const [updatedProcId, setUpdatedProcId] = useState('')
+
+  const [procedureTitle, setProcedureTitle] = useState('')
+
   const [formTitle, setTitle] = useState(
     formData && formData.title ? formData.title : ''
   )
@@ -29,15 +39,28 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
     formData && formData.sections ? formData.sections : []
   )
 
-  // alert('title')
-
   useEffect(() => {
     props.sendForm({
       title: formTitle,
       desc: formDescription,
       sections: sectionsState,
+      procedureId: updatedProcId !== '' ? updatedProcId : procedureId,
     })
   }, [formTitle, formDescription, sectionsState])
+
+  useEffect(() => {
+    const fetchTitle = async () => {
+      if (procedureId) {
+        const fetchedProcedure = await (
+          await getProcedureById(procedureId)
+        ).json()
+        if (fetchedProcedure) {
+          setProcedureTitle(fetchedProcedure.procedure)
+        }
+      }
+    }
+    fetchTitle()
+  }, [procedureId])
 
   const handleTitleChange = (event: { target: { value: any } }) => {
     setTitle(event.target.value)
@@ -54,6 +77,10 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
     ])
   }
 
+  const getProcedure = (val: string): void => {
+    setUpdatedProcId(val)
+  }
+
   const getSectionState = (val: any): void => {
     const updatedSections: Array<SectionInfo> = [...sectionsState]
     const updatedIndex = sectionsState.findIndex(
@@ -65,6 +92,13 @@ const FormTemplate: React.FC<FormTemplateProps> = (props) => {
 
   return (
     <div>
+      <div className={classes.row}>
+        {procedureId ? (
+          <Typography variant='h5'> Procedure: {procedureTitle} </Typography>
+        ) : (
+          <ProcedureInput sendData={getProcedure} />
+        )}
+      </div>
       <div className={classes.row}>
         <TextField
           id='standard-basic'

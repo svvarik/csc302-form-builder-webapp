@@ -6,6 +6,7 @@ export type FormTemplateProps = {
     title?: string
     desc?: string
     formID?: string
+    procedureId?: string
     sections?: SectionInfo[]
   }
 }
