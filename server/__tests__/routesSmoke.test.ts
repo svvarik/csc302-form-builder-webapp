@@ -41,7 +41,7 @@ test('Test Hello World endpoint', async   () => {
 
   test('Test get all new forms endpoint', async () => {
 
-    const response = (await fetch('http://localhost:8080/formResponse/newForms',
+    const response = (await fetch('http://localhost:8080/formTemplate/newForms',
     {method: 'GET',
     headers: {
         'Content-Type': 'application/json'
@@ -94,5 +94,30 @@ test('Test Hello World endpoint', async   () => {
 
   });
 
+test('Test get all form responses endpoint', async () => {
 
+  const response = (await fetch('http://localhost:8080/formResponse/newForms',
+  {method: 'GET',
+  headers: {
+      'Content-Type': 'application/json'
+    },
+  }))
 
+  expect(response.status).toBe(200);
+});
+
+test('Test create form response', async () => {
+
+  const form = {'title': 'testTitle', 'sections': [] as any[]}
+
+  const response = (await fetch('http://localhost:8080/formResponse',
+  {method: 'POST',
+  headers: {
+      'Content-Type': 'application/json'
+    },
+  body: JSON.stringify(form),
+  }))
+
+  expect(response.status).toBe(200);
+
+});

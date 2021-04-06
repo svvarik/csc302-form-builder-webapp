@@ -65,7 +65,7 @@ export const register = (app: express.Application, db: any) => {
      *     summary: Returns a list of all the possible empty form templates
      *     description: Generate a list of all possible empty form templates and return it
      */
-    app.get('/formResponse/newForms', async (_, res) => {
+    app.get('/formTemplate/newForms', async (_, res) => {
         const formTemplates = await integration.getFormTemplates(db);
         res.send(formTemplates);
     })
@@ -176,4 +176,93 @@ export const register = (app: express.Application, db: any) => {
             }
         })
 
+    /**
+     * @swagger
+     * /formResponse
+     */
+     app.get('/formResponse/newForms', async (req: express.Request, res: express.Response) => {
+        console.log("HI")
+
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(405).json({ errors: errors.array() });
+        }
+        try {
+            const formResponses = await integration.getFormResponses(db)
+            return res.status(200).json(formResponses)
+        } catch (err) {
+            return res.status(500).json(err.message);
+        }
+    })
+    
+    /**
+     * @swagger
+     * /formResponse/{formResponseId}:
+     */
+    app.get('/formResponse/:formResponseId', async (req: express.Request, res: express.Response) => {
+        const id = req.params.formResponseId;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        try {
+            const formResponse = await integration.getFormResponseById(id, db)
+            if (!formResponse) {
+                return res.status(404).json({errors: "Form Response not found"})
+            } else {
+                return res.status(200).json(formResponse);
+            }
+        } catch (err) {
+            return res.status(500).json(err.message);
+        }
+    })
+
+    /**
+     * @swagger 
+     * /formResponses
+     */
+    app.post('/formResponse', async (req: express.Request, res: express.Response) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({errors: errors.array() })
+        }
+        try {
+            const formResponse = Form.build(req.body)
+            const result = await integration.saveFormResponse(db, formResponse)
+            if (result === 200) { 
+                return res.status(200).json()
+            } else {
+                console.log(result)
+                return res.status(500).json()
+            }
+        } catch (err) {
+            return res.status(500).json(err.message);
+        }
+    })
+
+    /**
+     * @swagger 
+     * /formResponses/{formResponseId}
+     */
+     app.patch('/formResponse/:formResponseId', async (req: express.Request, res: express.Response) => {
+        const id = req.params.formResponseId
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({errors: errors.array() })
+        }
+        try {
+            const formResponse = Form.build(req.body)
+            const result = await integration.updateFormResponse(id, db, formResponse)
+            if (result === 400) { 
+                return res.status(400).json()
+            } else if (result === 404) { 
+                return res.status(404).json()
+            } else {
+                return res.status(200).json()
+            }
+        } catch (err) {
+            console.log(err)
+            return res.status(500).json(err.message);
+        }
+    })
 };

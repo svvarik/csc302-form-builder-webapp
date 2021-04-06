@@ -80,7 +80,7 @@ export async function UpdateForm(
 }
 
 export async function GetAllForms(): Promise<Response> {
-  const url = 'http://localhost:8080/formResponse/newForms'
+  const url = 'http://localhost:8080/formTemplate/newForms'
   const request = new Request(url, {
     method: 'get',
     headers: {
@@ -124,6 +124,40 @@ export async function GetFormTemplate(id: string): Promise<Response> {
   try {
     const getFormRequest = await fetch(request)
     return getFormRequest
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+export async function GetAllFormResponses(): Promise<Response> {
+  const url = 'http://localhost:8080/formResponse/newForms'
+  const request = new Request(url, {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  try {
+    const getAllFormsRequest = await fetch(request)
+    return getAllFormsRequest
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+export async function GetFormResponse(id: string): Promise<Response> {
+  const url = `http://localhost:8080/formResponse/${id}`
+  const request = new Request(url, {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  try {
+    const getFormResponse = await fetch(request)
+    return getFormResponse
   } catch (err) {
     console.error(err)
     throw err

@@ -11,7 +11,7 @@ describe('Form Filler Field Tests', () => {
         currTitle='Test Title'
         currResponse='False'
         currType='TF'
-        sendData={(_) => { }}
+        sendData={(_) => {}}
       />
     )
 
@@ -33,8 +33,7 @@ describe('Form Filler Field Tests', () => {
         currResponse='Blood Test'
         currType='CB'
         currOptions={['Blood Test', 'Urine Test']}
-        sendData={(_) => { }}
-        readOnly
+        sendData={(_) => {}}
       />
     )
 
@@ -56,7 +55,7 @@ describe('Form Filler Field Tests', () => {
         currResponse='Blood Test'
         currType='CB'
         currOptions={['Blood Test', 'Urine Test']}
-        sendData={(_) => { }}
+        sendData={(_) => {}}
       />
     )
 
@@ -80,7 +79,7 @@ describe('Form Filler Field Tests', () => {
         currResponse='Blood Test'
         currType='MC'
         currOptions={['Blood Test', 'Urine Test']}
-        sendData={(_) => { }}
+        sendData={(_) => {}}
       />
     )
 
@@ -101,7 +100,7 @@ describe('Form Filler Field Tests', () => {
         currTitle='Test Title'
         currType='MC'
         currOptions={['Blood Test', 'Urine Test']}
-        sendData={(_) => { }}
+        sendData={(_) => {}}
       />
     )
 
@@ -123,7 +122,7 @@ describe('Form Filler Field Tests', () => {
         currTitle='What is your age?'
         currResponse='12'
         currType='INT'
-        sendData={(_) => { }}
+        sendData={(_) => {}}
       />
     )
 
@@ -145,7 +144,7 @@ describe('Form Filler Field Tests', () => {
         editableStatus
         currTitle='What is your age?'
         currType='INT'
-        sendData={(_) => { }}
+        sendData={(_) => {}}
       />
     )
 
@@ -170,7 +169,7 @@ describe('Form Filler Field Tests', () => {
         currTitle='What is your name?'
         currResponse='Bill'
         currType='TEXT'
-        sendData={(_) => { }}
+        sendData={(_) => {}}
       />
     )
 
@@ -192,7 +191,7 @@ describe('Form Filler Field Tests', () => {
         editableStatus
         currTitle='What is your name?'
         currType='TEXT'
-        sendData={(_) => { }}
+        sendData={(_) => {}}
       />
     )
 
