@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Button,
@@ -14,13 +14,13 @@ import {
   IconButton,
   Grid,
   Box,
-  Hidden,
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { HighlightOff, AccountCircle } from '@material-ui/icons'
 import { FormConfig } from '../types/FormConfig.type'
 import { removeFromFormListThunk } from '../store/slices/FormList.slice'
 import { selectAuth } from '../store/store'
+import { getProcedureById } from '../requests'
 
 type FormConfigProps = FormConfig
 
@@ -103,6 +103,22 @@ const FormCard: React.FC<FormConfigProps> = ({
   const classes = useStyles()
   const dispatch = useDispatch()
   const { user } = useSelector(selectAuth)
+  const [procedureName, setProcedureName] = useState('')
+
+  useEffect(() => {
+    const fetchTitle = async () => {
+      if (procedure) {
+        const fetchedProcedure = await (
+          await getProcedureById(procedure)
+        ).json()
+        console.log(procedure)
+        if (fetchedProcedure) {
+          setProcedureName(fetchedProcedure.procedure)
+        }
+      }
+    }
+    fetchTitle()
+  }, [procedureName])
 
   const deleteCardHandler: () => void = () => {
     dispatch(removeFromFormListThunk(formID))
@@ -180,7 +196,9 @@ const FormCard: React.FC<FormConfigProps> = ({
                 <TableCell className={classes.tableCell}>
                   {dateModified}
                 </TableCell>
-                <TableCell className={classes.tableCell}>{procedure}</TableCell>
+                <TableCell className={classes.tableCell}>
+                  {procedureName}
+                </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell

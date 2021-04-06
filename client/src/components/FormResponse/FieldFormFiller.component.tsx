@@ -198,7 +198,12 @@ const FieldFormFiller: React.FC<FieldFormFillerProps> = (props) => {
   return (
     <div data-cy='fieldBox' className={classes.fieldBox}>
       <div className={classes.centeredRow}>
-        <TextField disabled data-cy='titleTextField' value={currTitle} />
+        <TextField
+          fullWidth
+          disabled
+          data-cy='titleTextField'
+          value={currTitle}
+        />
       </div>
       <div data-cy='fieldQuestion'>{renderQuestion()}</div>
     </div>

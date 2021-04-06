@@ -156,6 +156,7 @@ const FieldTemplate: React.FC<FieldProps> = (props) => {
     <div data-cy='fieldBox' className={classes.fieldBox}>
       <div className={classes.centeredRow}>
         <TextField
+          fullWidth
           data-cy='titleTextField'
           label='Field Title'
           value={jsonState.title}

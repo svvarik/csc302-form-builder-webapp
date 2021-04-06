@@ -7,26 +7,26 @@ describe('basic api tests', () => {
   })
 
   it('publish form template', async () => {
-      const response = await PublishForm("{'HI', []}")
-      if (response.status) {
-        // proper axios response
-        expect(response.status).toBe(200)
-      } else {
-        // it errored
-        console.error(response)
-        fail()
-      }
-    })
+    const response = await PublishForm("{'HI', []}")
+    if (response.status) {
+      // proper axios response
+      expect(response.status).toBe(200)
+    } else {
+      // it errored
+      console.error(response)
+      fail()
+    }
+  })
 
   it('save form', async () => {
-      const response = await SaveRequest("{'HI', []}")
-      if (response.status) {
-        // proper axios response
-        expect(response.status).toBe(200)
-      } else {
-        // it errored
-        console.error(response)
-        fail()
-      }
-    })
+    const response = await SaveRequest("{'HI', []}")
+    if (response.status) {
+      // proper axios response
+      expect(response.status).toBe(200)
+    } else {
+      // it errored
+      console.error(response)
+      fail()
+    }
+  })
 })

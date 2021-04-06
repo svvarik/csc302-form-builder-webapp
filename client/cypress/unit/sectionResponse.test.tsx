@@ -3,7 +3,6 @@ import React from 'react'
 import SectionResponse from '../../src/components/FormResponse/SectionResponse.component'
 
 describe('FormResponse Section Tests', () => {
-
   const sectionDataProp = {
     title: 'testTitle',
     fields: [
@@ -36,28 +35,31 @@ describe('FormResponse Section Tests', () => {
       },
     ],
   }
-  
+
   it('renders initial state correctly', () => {
-    mount(<SectionResponse 
-        title="title"
+    mount(
+      <SectionResponse
+        title='title'
         editableStatus={false}
-        sectionID="1234" 
+        sectionID='1234'
         sendData={() => {}}
-        sectionData= {sectionDataProp}
-        />)
+        sectionData={sectionDataProp}
+      />
+    )
     cy.dataCy('section-response-title').should('exist')
   })
 
   it('displays field correctly', () => {
-    mount(<SectionResponse 
-      title="title"
-      editableStatus={false}
-      sectionID="1234" 
-      sendData={() => {}}
-      sectionData= {sectionDataProp}
-      />)
+    mount(
+      <SectionResponse
+        title='title'
+        editableStatus={false}
+        sectionID='1234'
+        sendData={() => {}}
+        sectionData={sectionDataProp}
+      />
+    )
     cy.dataCy('expandMore').click()
     cy.dataCy('fieldBox').should('exist')
   })
 })
-

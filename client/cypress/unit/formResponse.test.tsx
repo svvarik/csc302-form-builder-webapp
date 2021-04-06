@@ -98,9 +98,7 @@ describe('FormResponse Tests', () => {
 
     cy.dataCy('formBox').should('exist')
 
-    cy.dataCy('patientIDField')
-      .find('input')
-      .should('have.value', '')
+    cy.dataCy('patientIDField').find('input').should('have.value', '')
 
     cy.dataCy('patientIDField').type('54321')
     cy.dataCy('patientIDField').find('input').should('have.value', '54321')
