@@ -63,7 +63,7 @@ const ConfigureFormResponse: React.FC<RouteComponentProps> = () => {
       setFormDesc(json.desc)
       setSections(json.sections)
       setProcedureID(
-        json.procedureID ? json.procedureID : '(no assigned procedure)'
+        json.procedureId ? json.procedureId : '(no assigned procedure)'
       )
       return json
     } catch (err) {
